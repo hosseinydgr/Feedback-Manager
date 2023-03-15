@@ -18,6 +18,7 @@ const SIssuePage: React.FC = (props) => {
         <SIssueHeader />
         <IssuesIssue
           id={issue.id}
+          userId={issue.userId}
           title={issue.title}
           des={issue.des}
           commentsCount={issue.commentsCount}

@@ -8,6 +8,7 @@ import NewIssue from "./components/new-issue-label/NewIssue";
 import SIssuePage from "./components/specific-issue/SIssuePage";
 import { useEffect } from "react";
 import { authActions } from "./store/auth";
+import EditIssue from "./components/edit-issue/EditIssue";
 
 function App() {
   const currentPage = useSelector((state: any) => state.page.currentPage);
@@ -64,6 +65,9 @@ function App() {
       break;
     case 6:
       content = <SIssuePage />;
+      break;
+    case 7:
+      content = <EditIssue />;
       break;
     default:
       content = "Something Went Wrong..!";

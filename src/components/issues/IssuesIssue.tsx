@@ -7,6 +7,7 @@ import styles from "./IssuesIssue.module.scss";
 
 const IssuesIssue: React.FC<{
   id: string;
+  userId?: string;
   title: string;
   des: string;
   commentsCount: number;
@@ -40,6 +41,7 @@ const IssuesIssue: React.FC<{
     dispatch(
       acitveIssueActions.setActiveIssue({
         id: props.id,
+        userId: props.userId,
         title: props.title,
         des: props.des,
         commentsCount: props.commentsCount,

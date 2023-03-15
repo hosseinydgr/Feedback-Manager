@@ -28,6 +28,7 @@ const IssuesMain: React.FC = (props) => {
       arr.push(
         <IssuesIssue
           id={issues[i].id}
+          userId={issues[i].userId}
           title={issues[i].title}
           des={issues[i].description}
           commentsCount={issues[i].commentsCount}
