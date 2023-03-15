@@ -68,8 +68,11 @@ const IssuesIssue: React.FC<{
         {arr}
       </div>
 
-      <div>
-        <img />
+      <div className={styles["flex-cont"]}>
+        <img
+          src="./Assets/comment-icon.png"
+          className={styles["comment-icon"]}
+        />
         <p>{props.commentsCount}</p>
       </div>
     </div>
