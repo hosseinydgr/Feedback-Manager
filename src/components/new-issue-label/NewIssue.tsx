@@ -12,6 +12,7 @@ const NewIssue: React.FC = (props) => {
   const [activeLabels, setActiveLabels] = useState<any>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [upload, setUpload] = useState(0);
 
   function titleChangeHandler(e: any) {
     setTitle(e.target.value);
@@ -68,6 +69,39 @@ const NewIssue: React.FC = (props) => {
     dispatch(pageActions.changePage(1));
   }
 
+  async function fileHandler(e: any) {
+    console.log(e.target.files[0]);
+    const xhr = new XMLHttpRequest();
+
+    xhr.upload.onprogress = function (event) {
+      setUpload((event.loaded / event.total) * 100);
+      console.log(`Uploaded ${event.loaded} of ${event.total}`);
+    };
+
+    // track completion: both successful or not
+    xhr.onloadend = function () {
+      if (xhr.status == 200) {
+        console.log("success");
+      } else {
+        console.log("error " + this.status);
+      }
+    };
+
+    xhr.open("POST", "http://localhost:3000/files/upload");
+    xhr.send(e.target.files[0]);
+
+    // const res = await fetch("http://localhost:3000/files/upload", {
+    //   method: "POST",
+    //   credentials: "include",
+    //   headers: {
+    //     "Content-Type": "application/json;charset=utf-8",
+    //   },
+    //   body: `key=${e.target.files[0]}`,
+    // });
+    // const data = await res.json();
+    // console.log(res, data);
+  }
+
   return (
     <div className={styles["main-cont"]}>
       <form onSubmit={submitHandler}>
@@ -103,6 +137,13 @@ const NewIssue: React.FC = (props) => {
           activeLabels={activeLabels}
           setActiveLabels={setActiveLabels}
         />
+        <input type="file" multiple onChange={fileHandler} />
+        <div
+          className={styles.upload}
+          style={{
+            background: `linear-gradient(90deg, red 0 ${upload}%, white ${upload}% 100%)`,
+          }}
+        ></div>
 
         <button
           type="submit"
