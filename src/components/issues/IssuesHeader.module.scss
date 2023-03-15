@@ -1,0 +1,33 @@
+.main-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #373e68;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.btn {
+  background-color: #ae1feb;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition-duration: 400ms;
+  border: none;
+}
+
+.btn:hover {
+  background-color: white;
+  color: #ae1feb;
+}
+
+.select-sort {
+  padding: 0 7px;
+  background-color: #373e68;
+  text-align: center;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

@@ -1,0 +1,52 @@
+.cont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-cont {
+  background-color: #f2f4ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.arrow {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  border: 1px solid red;
+  padding: 10px;
+}
+
+.loading {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin: 0 calc((100% - 20px) / 2);
+  padding: 0;
+  box-sizing: border-box;
+  border-top: 4px solid black;
+  border-right: 4px solid gainsboro;
+  border-bottom: 4px solid gainsboro;
+  border-left: 4px solid gainsboro;
+  animation: change 0.7s infinite linear;
+  animation-delay: 0s;
+}
+
+@keyframes change {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

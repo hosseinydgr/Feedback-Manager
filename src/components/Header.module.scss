@@ -1,0 +1,28 @@
+.main-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5%;
+  width: 100%;
+  background-color: white;
+}
+
+.action-btn {
+  background-color: black;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition-duration: 400ms;
+}
+
+.action-btn:hover {
+  background-color: white;
+  color: black;
+}
+
+@media (width <=450px) {
+  .main-cont {
+    padding: 10px;
+  }
+}

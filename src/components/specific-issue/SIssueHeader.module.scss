@@ -1,0 +1,20 @@
+.main-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f7f8fd;
+  padding: 20px 0;
+}
+
+.main-cont button {
+  background-color: #4661e6;
+  padding: 10px 23px;
+  border: none;
+  color: white;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.main-cont p {
+  cursor: pointer;
+}
