@@ -12,7 +12,7 @@ const NewIssuesLabelsCont: React.FC<{
 
   function removeLabel(id: string) {
     const newState = [...props.activeLabels];
-    newState.splice(newState.indexOf(id));
+    newState.splice(newState.indexOf(id), 1);
     props.setActiveLabels(newState);
   }
 

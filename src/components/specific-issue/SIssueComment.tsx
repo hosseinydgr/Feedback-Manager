@@ -1,19 +1,13 @@
 import styles from "./SIssueComment.module.scss";
 import { useEffect, useState } from "react";
-import { ajax } from "rxjs/ajax";
-import { map } from "rxjs/operators";
+import { useDispatch, useSelector } from "react-redux";
 
 const SIssueComment: React.FC<{ des: string; userId: string }> = (props) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const user = useSelector((state: any) => state.commentUser[props.userId]);
+  const dispatch = useDispatch();
 
   useEffect(function () {
-    ajax(`http://localhost:3000/users/${props.userId}`)
-      .pipe(map((value) => value.response))
-      .subscribe((value: any) => {
-        setName(value.name);
-        setEmail(value.email);
-      });
+    dispatch({ type: "commentUser", payload: props.userId });
   }, []);
 
   return (
@@ -23,8 +17,12 @@ const SIssueComment: React.FC<{ des: string; userId: string }> = (props) => {
           <img src="./Assets/pic.jpg" className={styles.avatar} />
 
           <div>
-            <p className={styles.username}>{name}</p>
-            <p className={styles.userid}>{email}</p>
+            <p className={styles.username}>
+              {user === undefined ? "" : user.name}
+            </p>
+            <p className={styles.userid}>
+              {user === undefined ? "" : user.email}
+            </p>
           </div>
         </div>
 

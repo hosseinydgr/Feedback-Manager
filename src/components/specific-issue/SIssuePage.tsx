@@ -27,16 +27,8 @@ const SIssuePage: React.FC = (props) => {
           downVoteCount={issue.downVoteCount}
           date={issue.date}
         />
-        <SIssueCommentsCont
-          id={issue.id}
-          comments={comments}
-          setComments={setComments}
-        />
-        <SIssueAddComment
-          id={issue.id}
-          comments={comments}
-          setComments={setComments}
-        />
+        <SIssueCommentsCont id={issue.id} />
+        <SIssueAddComment id={issue.id} />
       </div>
     </>
   );

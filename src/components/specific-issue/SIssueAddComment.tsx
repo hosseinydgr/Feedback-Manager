@@ -1,17 +1,12 @@
 import styles from "./SIssueAddComment.module.scss";
 import { useState } from "react";
-import SIssueComment from "./SIssueComment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const SIssueAddComment: React.FC<{
-  id: string;
-  comments: any;
-  setComments: any;
-}> = (props) => {
+const SIssueAddComment: React.FC<{ id: string }> = (props) => {
   const [text, setText] = useState("");
   const [leftChars, setLeftChars] = useState(250);
-  const [error, setError] = useState("");
-  const userId = useSelector((state: any) => state.auth.user.id);
+  const error = useSelector((state: any) => state.addCommentError);
+  const dispatch = useDispatch();
 
   function inputHandler(e: any) {
     setText(e.target.value);
@@ -22,38 +17,7 @@ const SIssueAddComment: React.FC<{
   }
 
   function postComment() {
-    if (text !== "") {
-      (async function postData() {
-        try {
-          const res = await fetch(
-            `http://localhost:3000/issues/${props.id}/comments`,
-            {
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json;charset=utf-8",
-              },
-              body: JSON.stringify({ text: text }),
-            }
-          );
-          const data = await res.json();
-          if (res.ok) {
-            props.setComments([
-              <SIssueComment des={text} userId={userId} />,
-              ...props.comments,
-            ]);
-          } else {
-            throw new Error(data.message);
-          }
-          // console.log(data, res);
-        } catch (err: any) {
-          setError(err.message);
-        }
-      })();
-    } else {
-      setError("Comment can't be empty.");
-      setTimeout(() => setError(""), 3000);
-    }
+    dispatch({ type: "addNewComment", text, id: props.id });
   }
 
   return (
