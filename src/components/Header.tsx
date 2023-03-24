@@ -34,7 +34,16 @@ const Header: React.FC = (props) => {
     localStorage.setItem("user", "");
   }
 
-  return <div className={styles["main-cont"]}>{content}</div>;
+  return (
+    <div className={styles["main-cont"]}>
+      {content}
+      <img
+        src="./Assets/bale-logo.png"
+        alt="bale-logo"
+        className={styles["bale-logo"]}
+      />
+    </div>
+  );
 };
 
 export default Header;

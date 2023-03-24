@@ -1,0 +1,49 @@
+.main-cont {
+  width: 100%;
+  background-color: white;
+  margin-top: 20px;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 25px rgb(233, 233, 233);
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.flex-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.view {
+  cursor: pointer;
+  font-size: 16px;
+  color: rgb(65, 65, 255);
+  text-decoration: underline;
+  font-style: oblique;
+}
+
+.margin {
+  margin: 10px 0;
+}
+
+.bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.orange {
+  background-color: #f69e86;
+}
+
+.purple {
+  background-color: #ae1feb;
+}
+
+.blue {
+  background-color: #62bcfa;
+}

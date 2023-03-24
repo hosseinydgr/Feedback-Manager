@@ -1,3 +1,17 @@
 .main-cont {
   width: 30%;
 }
+
+.banner {
+  width: 100%;
+  background: linear-gradient(135deg, #31447b 0%, #42b0a0 49.48%, #4ae0b0 100%);
+  margin-bottom: 20px;
+  padding: 60px 25px 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 25px rgb(233, 233, 233);
+  color: white;
+}
+
+.banner h2 {
+  margin-bottom: 15px;
+}
