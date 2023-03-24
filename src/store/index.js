@@ -10,6 +10,8 @@ import { commentUserReducer } from "./commentUser";
 import { issuesReducer } from "./issues";
 import { labelsReducer } from "./labels";
 import { pageReducer } from "./page";
+import { uploadProgressReducer } from "./upload-progress";
+import { uploadedFilesReducer } from "./uploaded-files";
 
 const epicMiddleware = createEpicMiddleware();
 
@@ -24,6 +26,8 @@ export const store = configureStore({
     commentsLoadError: commentsLoadErrorReducer,
     addCommentError: addCommentErrorReducer,
     commentUser: commentUserReducer,
+    uploadFiles: uploadedFilesReducer,
+    uploadProgress: uploadProgressReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

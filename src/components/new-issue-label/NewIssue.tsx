@@ -1,8 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { pageActions } from "../../store/page";
+import { uploadProgressActions } from "../../store/upload-progress";
+import { uploadedFilesActions } from "../../store/uploaded-files";
 import styles from "./NewIssue.module.scss";
 import NewIssuesLabelsCont from "./NewIssueLabelsCont";
+import UploadProgressCont from "./UploadProgressCont";
 
 const NewIssue: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -12,7 +15,9 @@ const NewIssue: React.FC = (props) => {
   const [activeLabels, setActiveLabels] = useState<any>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [upload, setUpload] = useState(0);
+  const myRef: any = useRef();
+  const upload = useSelector((state: any) => state.uploadProgress);
+  const files = useSelector((state: any) => state.uploadFiles);
 
   function titleChangeHandler(e: any) {
     setTitle(e.target.value);
@@ -70,36 +75,20 @@ const NewIssue: React.FC = (props) => {
   }
 
   async function fileHandler(e: any) {
-    console.log(e.target.files[0]);
-    const xhr = new XMLHttpRequest();
+    e.preventDefault();
+    // console.log(files);
+    dispatch({ type: "uploadFiles", files: files });
+  }
 
-    xhr.upload.onprogress = function (event) {
-      setUpload((event.loaded / event.total) * 100);
-      console.log(`Uploaded ${event.loaded} of ${event.total}`);
-    };
+  function fileUploadHandler(e: any) {
+    // console.log(e.target.files);
+    dispatch(uploadedFilesActions.setFiles(e.target.files));
+  }
 
-    // track completion: both successful or not
-    xhr.onloadend = function () {
-      if (xhr.status == 200) {
-        console.log("success");
-      } else {
-        console.log("error " + this.status);
-      }
-    };
-
-    xhr.open("POST", "http://localhost:3000/files/upload");
-    xhr.send(e.target.files[0]);
-
-    // const res = await fetch("http://localhost:3000/files/upload", {
-    //   method: "POST",
-    //   credentials: "include",
-    //   headers: {
-    //     "Content-Type": "application/json;charset=utf-8",
-    //   },
-    //   body: `key=${e.target.files[0]}`,
-    // });
-    // const data = await res.json();
-    // console.log(res, data);
+  function addFiles() {
+    dispatch(uploadedFilesActions.setFiles([]));
+    dispatch(uploadProgressActions.resetUpload());
+    myRef.current.click();
   }
 
   return (
@@ -137,13 +126,25 @@ const NewIssue: React.FC = (props) => {
           activeLabels={activeLabels}
           setActiveLabels={setActiveLabels}
         />
-        <input type="file" multiple onChange={fileHandler} />
-        <div
-          className={styles.upload}
-          style={{
-            background: `linear-gradient(90deg, red 0 ${upload}%, white ${upload}% 100%)`,
-          }}
-        ></div>
+
+        <div className={styles["files-cont"]}>
+          <input
+            type="file"
+            multiple
+            onChange={fileUploadHandler}
+            ref={myRef}
+            style={{ display: "none" }}
+          />
+          <div onClick={addFiles} className={styles["add-files"]}>
+            Click here to add files
+          </div>
+
+          <UploadProgressCont files={files} upload={upload} />
+
+          <button onClick={fileHandler} className={styles["send-files-btn"]}>
+            Send Files
+          </button>
+        </div>
 
         <button
           type="submit"
@@ -161,5 +162,4 @@ const NewIssue: React.FC = (props) => {
     </div>
   );
 };
-
 export default NewIssue;
