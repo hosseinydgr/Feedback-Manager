@@ -7,6 +7,11 @@
   border-radius: 15px;
 }
 
+.btns-cont {
+  display: flex;
+  gap: 5px;
+}
+
 .btn {
   background-color: #ae1feb;
   color: white;
@@ -30,4 +35,44 @@
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.mobile-btns-cont {
+  display: block;
+}
+
+.br {
+  display: none;
+}
+
+@media (width <= 750px) {
+  .main-cont {
+    border-radius: 0;
+  }
+}
+
+@media (width <= 580px) {
+  .suggestions-count {
+    display: none;
+  }
+}
+
+@media (width <= 440px) {
+  .main-cont {
+    padding: 10px 3px;
+  }
+
+  .btns-cont {
+    flex-direction: column;
+  }
+
+  .br {
+    display: block;
+  }
+
+  .select-sort {
+    text-align: left;
+    padding: 0;
+    margin-top: 5px;
+  }
 }

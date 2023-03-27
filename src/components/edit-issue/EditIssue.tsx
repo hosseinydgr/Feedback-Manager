@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { pageActions } from "../../store/page";
 import styles from "./EditIssue.module.scss";
+import { Link, useNavigate } from "react-router-dom";
 
 const EditIssue: React.FC = (props) => {
   const dispatch = useDispatch();
   const activeIssue = useSelector((state: any) => state.activeIssue);
   const userId = useSelector((state: any) => state.auth.user.id);
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState(activeIssue.title);
   const [des, setDes] = useState(activeIssue.des);
@@ -64,7 +65,7 @@ const EditIssue: React.FC = (props) => {
                 const data = await res.json();
                 console.log(data, res);
                 if (res.ok) {
-                  dispatch(pageActions.changePage(1));
+                  navigate("/issues");
                 } else throw new Error(data.message);
               } catch (err: any) {
                 setError(err.message);
@@ -76,10 +77,6 @@ const EditIssue: React.FC = (props) => {
         );
       }
     }
-  }
-
-  function goToIssue() {
-    dispatch(pageActions.changePage(6));
   }
 
   return (
@@ -136,9 +133,9 @@ const EditIssue: React.FC = (props) => {
         </button>
       </form>
 
-      <p className={styles["go-to-issues"]} onClick={goToIssue}>
-        Get back to issue page
-      </p>
+      <Link to={`/issues/${activeIssue.id}`}>
+        <p className={styles["go-to-issues"]}>Get back to issue page</p>
+      </Link>
     </div>
   );
 };

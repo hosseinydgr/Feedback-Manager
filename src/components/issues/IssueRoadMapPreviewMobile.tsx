@@ -1,7 +1,7 @@
-import styles from "./IssueRoadMapPreview.module.scss";
+import styles from "./IssueRoadMapPreviewMobile.module.scss";
 import { Link } from "react-router-dom";
 
-const IssueRoadMapPreview: React.FC = function () {
+const IssueRoadMapPreviewMobile: React.FC = function () {
   return (
     <div className={styles["main-cont"]}>
       <div className={`${styles["flex-cont"]} ${styles.header}`}>
@@ -38,4 +38,4 @@ const IssueRoadMapPreview: React.FC = function () {
   );
 };
 
-export default IssueRoadMapPreview;
+export default IssueRoadMapPreviewMobile;

@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { pageActions } from "../../store/page";
 import { uploadProgressActions } from "../../store/upload-progress";
 import { uploadedFilesActions } from "../../store/uploaded-files";
 import styles from "./NewIssue.module.scss";
 import NewIssuesLabelsCont from "./NewIssueLabelsCont";
 import UploadProgressCont from "./UploadProgressCont";
+import { Link, useNavigate } from "react-router-dom";
 
 const NewIssue: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ const NewIssue: React.FC = (props) => {
   const myRef: any = useRef();
   const upload = useSelector((state: any) => state.uploadProgress);
   const files = useSelector((state: any) => state.uploadFiles);
+  const navigate = useNavigate();
 
   function titleChangeHandler(e: any) {
     setTitle(e.target.value);
@@ -57,7 +58,7 @@ const NewIssue: React.FC = (props) => {
               const data = await res.json();
               // console.log(data, res);
               if (res.ok) {
-                dispatch(pageActions.changePage(1));
+                navigate("/issues");
               } else throw new Error(data.message);
             } catch (err: any) {
               setError(err.message);
@@ -68,10 +69,6 @@ const NewIssue: React.FC = (props) => {
         1
       );
     }
-  }
-
-  function goToIssues() {
-    dispatch(pageActions.changePage(1));
   }
 
   async function fileHandler(e: any) {
@@ -156,9 +153,9 @@ const NewIssue: React.FC = (props) => {
         </button>
       </form>
 
-      <p className={styles["go-to-issues"]} onClick={goToIssues}>
-        Get back to issues page
-      </p>
+      <Link to="/issues">
+        <p className={styles["go-to-issues"]}>Get back to issues page</p>
+      </Link>
     </div>
   );
 };

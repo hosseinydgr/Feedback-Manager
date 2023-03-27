@@ -2,14 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const pageSlice = createSlice({
   name: "pageSlice",
-  initialState: { currentPage: 1, nextPage: 1 },
+  initialState: { nextPage: "/issues" },
   reducers: {
-    changePage(state, action) {
-      return { ...state, currentPage: action.payload };
-    },
-
-    setNextPage(state, action) {
-      return { ...state, nextPage: action.payload };
+    setNextPage(_, action) {
+      return { nextPage: action.payload };
     },
   },
 });

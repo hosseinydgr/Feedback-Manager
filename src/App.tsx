@@ -7,8 +7,25 @@ import NewLabel from "./components/new-issue-label/NewLabel";
 import NewIssue from "./components/new-issue-label/NewIssue";
 import SIssuePage from "./components/specific-issue/SIssuePage";
 import { useEffect } from "react";
-import { authActions } from "./store/auth";
 import EditIssue from "./components/edit-issue/EditIssue";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+import BoardPage from "./components/board/BoardPage";
+
+const router = createBrowserRouter([
+  { path: "/", element: <Navigate to="/issues" /> },
+  { path: "/issues", element: <IssuesPage /> },
+  { path: "/login", element: <LogIn /> },
+  { path: "/signup", element: <SignUp /> },
+  { path: "/newLabel", element: <NewLabel /> },
+  { path: "/board", element: <BoardPage /> },
+  { path: "/issues/:issueId", element: <SIssuePage /> },
+  { path: "/issues/new", element: <NewIssue /> },
+  { path: "/issues/:issueId/edit", element: <EditIssue /> },
+]);
 
 function App() {
   const currentPage = useSelector((state: any) => state.page.currentPage);
@@ -18,62 +35,19 @@ function App() {
     let user: any = localStorage.getItem("user");
     if (user) {
       user = JSON.parse(user);
-      (async function postData() {
-        try {
-          const res = await fetch("http://localhost:3000/auth/login", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify({
-              email: user.email,
-              password: user.password,
-            }),
-          });
-          const data = await res.json();
-          if (res.ok) {
-            dispatch(authActions.login(data));
-          } else {
-            throw new Error(data.message);
-          }
-          // console.log(res);
-          // console.log(data);
-        } catch (err: any) {
-          console.log("Couldn't login by localStorage", err.message);
-        }
-      })();
+      dispatch({
+        type: "loginByLocalStorage",
+        payload: {
+          email: user.email,
+          password: user.password,
+        },
+      });
     }
+
+    dispatch({ type: "getIssues" });
   }, []);
 
-  let content;
-  switch (currentPage) {
-    case 1:
-      content = <IssuesPage />;
-      break;
-    case 2:
-      content = <LogIn />;
-      break;
-    case 3:
-      content = <SignUp />;
-      break;
-    case 4:
-      content = <NewLabel />;
-      break;
-    case 5:
-      content = <NewIssue />;
-      break;
-    case 6:
-      content = <SIssuePage />;
-      break;
-    case 7:
-      content = <EditIssue />;
-      break;
-    default:
-      content = "Something Went Wrong..!";
-  }
-
-  return <div>{content}</div>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

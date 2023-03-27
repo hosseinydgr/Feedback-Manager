@@ -47,15 +47,3 @@
 .blue {
   background-color: #62bcfa;
 }
-
-@media (width <= 1000px) {
-  .main-cont {
-    margin-top: 0;
-  }
-}
-
-@media (width <= 750px) {
-  .main-cont {
-    display: none;
-  }
-}

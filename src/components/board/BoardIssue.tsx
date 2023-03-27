@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { acitveIssueActions } from "../../store/active-issue";
 import Label from "../Label";
 import Upvote from "../Upvote";
-import styles from "./IssuesIssue.module.scss";
+import styles from "./BoardIssue.module.scss";
 import { useNavigate } from "react-router-dom";
 
-const IssuesIssue: React.FC<{
+const BoardIssue: React.FC<{
   id: string;
   userId?: string;
   title: string;
@@ -15,7 +15,9 @@ const IssuesIssue: React.FC<{
   upVoteCount: number;
   downVoteCount: number;
   date: number;
-}> = (props) => {
+  color: string;
+  status: string;
+}> = function (props) {
   const allLabelss = useSelector((state: any) => state.labels.allLabels);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,22 +59,24 @@ const IssuesIssue: React.FC<{
   }
 
   return (
-    <>
-      <div className={styles["main-cont"]}>
-        <div className={styles["flex-cont-content"]}>
-          <Upvote id={props.id}>
-            {String(props.upVoteCount - props.downVoteCount)}
-          </Upvote>
+    <div className={`${styles["main-cont"]} ${styles[props.color]}`}>
+      <div className={styles["flex-cont-bullet"]}>
+        <div className={`${styles.bullet} ${styles[props.color]}`}></div>
+        <p>{props.status}</p>
+      </div>
 
-          <div className={styles.content}>
-            <h3 onClick={goToIssuePage} className={styles.title}>
-              {props.title}
-            </h3>
-            <p className={styles.description}>{props.des}</p>
-            {arr}
-          </div>
-        </div>
+      <div className={styles.content}>
+        <h3 onClick={goToIssuePage} className={styles.title}>
+          {props.title}
+        </h3>
+        <p className={styles.description}>{props.des}</p>
+        {arr}
+      </div>
 
+      <div className={styles["flex-cont-vote-comment"]}>
+        <Upvote id={props.id}>
+          {String(props.upVoteCount - props.downVoteCount)}
+        </Upvote>
         <div className={styles["flex-cont"]}>
           <img
             src="../Assets/comment-icon.png"
@@ -81,30 +85,8 @@ const IssuesIssue: React.FC<{
           <p>{props.commentsCount}</p>
         </div>
       </div>
-
-      <div className={styles["mobile-main-cont"]}>
-        <h3 onClick={goToIssuePage} className={styles.title}>
-          {props.title}
-        </h3>
-        <p className={styles.description}>{props.des}</p>
-        <div className={styles["mobile-labels-cont"]}>{arr}</div>
-
-        <div className={styles["mobile-flex-cont"]}>
-          <Upvote id={props.id}>
-            {String(props.upVoteCount - props.downVoteCount)}
-          </Upvote>
-
-          <div className={styles["flex-cont"]}>
-            <img
-              src="../Assets/comment-icon.png"
-              className={styles["comment-icon"]}
-            />
-            <p>{props.commentsCount}</p>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
-export default IssuesIssue;
+export default BoardIssue;

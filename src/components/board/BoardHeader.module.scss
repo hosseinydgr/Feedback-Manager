@@ -1,0 +1,31 @@
+.main-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #373e68;
+  padding: 25px;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 35px;
+}
+
+.btn {
+  background-color: #ae1feb;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition-duration: 400ms;
+  border: none;
+  font-size: 15px;
+}
+
+.btn:hover {
+  background-color: white;
+  color: #ae1feb;
+}
+
+.go-back {
+  color: white;
+  margin-bottom: 10px;
+}
