@@ -4,6 +4,7 @@ import { pageActions } from "../../store/page";
 // import { authActions } from "../../store/auth";
 import { useState } from "react";
 import { authActions } from "../../store/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 const LogIn: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const LogIn: React.FC = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function emailChangeHandler(e: any) {
     setEmail(e.target.value);
@@ -19,14 +21,6 @@ const LogIn: React.FC = (props) => {
 
   function passwordChangeHandler(e: any) {
     setPassword(e.target.value);
-  }
-
-  function switchPage() {
-    dispatch(pageActions.changePage(3));
-  }
-
-  function goToIssues() {
-    dispatch(pageActions.changePage(1));
   }
 
   function cancelError() {
@@ -53,7 +47,7 @@ const LogIn: React.FC = (props) => {
               });
               const data = await res.json();
               if (res.ok) {
-                dispatch(pageActions.changePage(nextPage));
+                navigate(nextPage);
                 dispatch(authActions.login(data));
                 localStorage.setItem(
                   "user",
@@ -119,13 +113,13 @@ const LogIn: React.FC = (props) => {
       </form>
       <p>
         Haven't an account?{" "}
-        <span className={styles["switch-page"]} onClick={switchPage}>
-          Sign Up
-        </span>
+        <Link to="/signup">
+          <span className={styles["switch-page"]}>Sign Up</span>
+        </Link>
       </p>
-      <p className={styles["go-to-order"]} onClick={goToIssues}>
-        Get back to issues page
-      </p>
+      <Link to="/issues">
+        <p className={styles["go-to-order"]}>Get back to issues page</p>
+      </Link>
     </div>
   );
 };

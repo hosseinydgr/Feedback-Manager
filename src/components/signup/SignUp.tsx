@@ -1,8 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { pageActions } from "../../store/page";
 import styles from "./SignUp.module.scss";
 import { useState } from "react";
 import { authActions } from "../../store/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -11,6 +12,8 @@ const SignUp: React.FC = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const nextPage = useSelector((state: any) => state.page.nextPage);
+  const navigate = useNavigate();
 
   function nameChangeHandler(e: any) {
     setName(e.target.value);
@@ -46,7 +49,7 @@ const SignUp: React.FC = (props) => {
               });
               const data = await res.json();
               if (res.ok) {
-                dispatch(pageActions.changePage(1));
+                navigate(nextPage);
                 dispatch(
                   authActions.login({
                     id: data.userId,
@@ -68,14 +71,6 @@ const SignUp: React.FC = (props) => {
         1
       );
     }
-  }
-
-  function switchPage() {
-    dispatch(pageActions.changePage(2));
-  }
-
-  function goToIssues() {
-    dispatch(pageActions.changePage(1));
   }
 
   function cancelError() {
@@ -134,13 +129,13 @@ const SignUp: React.FC = (props) => {
       </form>
       <p>
         Already have an account?{" "}
-        <span className={styles["switch-page"]} onClick={switchPage}>
-          Sign In
-        </span>
+        <Link to="/login">
+          <span className={styles["switch-page"]}>Sign In</span>
+        </Link>
       </p>
-      <p className={styles["go-to-issues"]} onClick={goToIssues}>
-        Get back to issues page
-      </p>
+      <Link to="/issues">
+        <p className={styles["go-to-issues"]}>Get back to issues page</p>
+      </Link>
     </div>
   );
 };

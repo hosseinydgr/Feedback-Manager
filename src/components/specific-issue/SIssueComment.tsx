@@ -14,7 +14,7 @@ const SIssueComment: React.FC<{ des: string; userId: string }> = (props) => {
     <div className={styles["main-cont"]}>
       <div className={styles["flex-cont"]}>
         <div className={styles["flex-cont"]}>
-          <img src="./Assets/pic.jpg" className={styles.avatar} />
+          <img src="../Assets/pic.jpg" className={styles.avatar} />
 
           <div>
             <p className={styles.username}>

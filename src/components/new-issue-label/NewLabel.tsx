@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { pageActions } from "../../store/page";
 import styles from "./NewLabel.module.scss";
+import { Link, useNavigate } from "react-router-dom";
 
 const NewLabel: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -9,6 +9,7 @@ const NewLabel: React.FC = (props) => {
   const [color, setColor] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function nameChangeHandler(e: any) {
     setName(e.target.value);
@@ -36,7 +37,7 @@ const NewLabel: React.FC = (props) => {
               });
               const data = await res.json();
               if (res.ok) {
-                dispatch(pageActions.changePage(1));
+                navigate("/issues");
               } else throw new Error(data.message);
               // console.log(data);
             } catch (err: any) {
@@ -48,10 +49,6 @@ const NewLabel: React.FC = (props) => {
         1
       );
     }
-  }
-
-  function goToIssues() {
-    dispatch(pageActions.changePage(1));
   }
 
   return (
@@ -90,9 +87,9 @@ const NewLabel: React.FC = (props) => {
         </button>
       </form>
 
-      <p className={styles["go-to-issues"]} onClick={goToIssues}>
-        Get back to issues page
-      </p>
+      <Link to="/issues">
+        <p className={styles["go-to-issues"]}>Get back to issues page</p>
+      </Link>
     </div>
   );
 };

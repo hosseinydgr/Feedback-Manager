@@ -1,85 +1,52 @@
 import { useEffect, useState } from "react";
 import IssuesIssue from "./IssuesIssue";
 import styles from "./IssuesMain.module.scss";
-import { ajax } from "rxjs/ajax";
-import { map } from "rxjs/operators";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { issuesActions } from "../../store/issues";
 import IssuesHeader from "./IssuesHeader";
 
 const IssuesMain: React.FC = (props) => {
-  // const dispatch = useDispatch();
-  // const issues = useSelector((state: any) => state.issues);
-  const [sortType, setSortType] = useState("");
+  const dispatch = useDispatch();
+  let issues: any = useSelector((state: any) => state.issues);
+  const [sortType, setSortType] = useState("most-votes");
   const activeLabel = useSelector((state: any) => state.labels.activeLabel);
 
-  let issues: any;
-  if (sortType === "") issues = [];
-  else if (sortType === "most-votes") issues = [...mostVotes];
-  else if (sortType === "most-comments") issues = [...mostComments];
-  else if (sortType === "date") issues = [...date];
+  let arr = [];
+  let sortedIssues: any = [...issues];
 
-  // console.log(issues);
+  if (sortType === "") sortedIssues = [];
+  else if (sortType === "most-votes") {
+    sortedIssues.sort(function (a: any, b: any) {
+      return (
+        b.upVoteCount - b.downVoteCount - (a.upVoteCount - a.downVoteCount)
+      );
+    });
+  } else if (sortType === "most-comments") {
+    sortedIssues.sort(function (a: any, b: any) {
+      return b.commentsCount - a.commentsCount;
+    });
+  } else if (sortType === "date") {
+    sortedIssues.sort(function (a: any, b: any) {
+      return a.date - b.date;
+    });
+  }
 
-  const arr = [];
-
-  for (let i = 0; i < issues.length; i++) {
-    if (issues[i].labels.includes(activeLabel) || activeLabel === "")
+  for (let i = 0; i < sortedIssues.length; i++) {
+    if (sortedIssues[i].labels.includes(activeLabel) || activeLabel === "")
       arr.push(
         <IssuesIssue
-          id={issues[i].id}
-          userId={issues[i].userId}
-          title={issues[i].title}
-          des={issues[i].description}
-          commentsCount={issues[i].commentsCount}
-          labels={issues[i].labels}
-          upVoteCount={issues[i].upVoteCount}
-          downVoteCount={issues[i].downVoteCount}
-          date={issues[i].date}
-          key={issues[i].id}
+          id={sortedIssues[i].id}
+          userId={sortedIssues[i].userId}
+          title={sortedIssues[i].title}
+          des={sortedIssues[i].description}
+          commentsCount={sortedIssues[i].commentsCount}
+          labels={sortedIssues[i].labels}
+          upVoteCount={sortedIssues[i].upVoteCount}
+          downVoteCount={sortedIssues[i].downVoteCount}
+          date={sortedIssues[i].date}
+          key={sortedIssues[i].id}
         />
       );
   }
-
-  useEffect(function () {
-    // (async function getData() {
-    //   const res = await fetch("http://localhost:3000/issues", {
-    //     method: "GET",
-    //     credentials: "include",
-    //     headers: {
-    //       "Content-Type": "application/json;charset=utf-8",
-    //     },
-    //   });
-    //   const data = await res.json();
-    //   console.log(data);
-    // })();
-
-    ajax("http://localhost:3000/issues")
-      .pipe(map((value) => value.response))
-      .subscribe((value: any) => {
-        // console.log(value);
-        // dispatch(issuesActions.getIssues(value));
-        mostVotes = [...value];
-        mostComments = [...value];
-        date = [...value];
-
-        mostVotes.sort(function (a: any, b: any) {
-          return (
-            b.upVoteCount - b.downVoteCount - (a.upVoteCount - a.downVoteCount)
-          );
-        });
-
-        mostComments.sort(function (a: any, b: any) {
-          return b.commentsCount - a.commentsCount;
-        });
-
-        date.sort(function (a: any, b: any) {
-          return a.date - b.date;
-        });
-
-        setSortType("most-votes");
-      });
-  }, []);
 
   return (
     <div className={styles["main-cont"]}>
@@ -89,5 +56,4 @@ const IssuesMain: React.FC = (props) => {
   );
 };
 
-let mostVotes: any[], mostComments: any[], date: any[];
 export default IssuesMain;

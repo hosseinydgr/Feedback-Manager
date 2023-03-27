@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/auth";
 import { pageActions } from "../store/page";
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 
 const Header: React.FC = (props) => {
   const isIn = useSelector((state: any) => state.auth.isIn);
   const user = useSelector((state: any) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let content;
   if (isIn) {
@@ -25,8 +27,8 @@ const Header: React.FC = (props) => {
   }
 
   function authPageOpener() {
-    dispatch(pageActions.setNextPage(1));
-    dispatch(pageActions.changePage(2));
+    dispatch(pageActions.setNextPage("/issues"));
+    navigate("/login");
   }
 
   function signOutHandler() {
@@ -38,7 +40,7 @@ const Header: React.FC = (props) => {
     <div className={styles["main-cont"]}>
       {content}
       <img
-        src="./Assets/bale-logo.png"
+        src="../Assets/bale-logo.png"
         alt="bale-logo"
         className={styles["bale-logo"]}
       />

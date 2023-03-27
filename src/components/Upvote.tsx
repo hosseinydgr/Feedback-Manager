@@ -2,6 +2,7 @@ import styles from "./Upvote.module.scss";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { pageActions } from "../store/page";
+import { useNavigate } from "react-router-dom";
 
 const Upvote: React.FC<{ children: string; id: string }> = (props) => {
   const [votes, setVotes] = useState(props.children);
@@ -9,6 +10,7 @@ const Upvote: React.FC<{ children: string; id: string }> = (props) => {
   const [loading, setLoading] = useState(false);
   const userIsIn = useSelector((state: any) => state.auth.isIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function upVote() {
     if (userIsIn) {
@@ -49,8 +51,8 @@ const Upvote: React.FC<{ children: string; id: string }> = (props) => {
         );
       }
     } else {
-      dispatch(pageActions.changePage(2));
-      dispatch(pageActions.setNextPage(1));
+      navigate("/login");
+      dispatch(pageActions.setNextPage("/issues"));
     }
   }
 
@@ -93,8 +95,8 @@ const Upvote: React.FC<{ children: string; id: string }> = (props) => {
         );
       }
     } else {
-      dispatch(pageActions.changePage(2));
-      dispatch(pageActions.setNextPage(1));
+      navigate("/login");
+      dispatch(pageActions.setNextPage("/issues"));
     }
   }
 

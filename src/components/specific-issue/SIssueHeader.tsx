@@ -1,27 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
 import { pageActions } from "../../store/page";
 import styles from "./SIssueHeader.module.scss";
+import { Link, useNavigate } from "react-router-dom";
 
-const SIssueHeader: React.FC = (props) => {
+const SIssueHeader: React.FC<{ id: string }> = (props) => {
   const dispatch = useDispatch();
   const isIn = useSelector((state: any) => state.auth.isIn);
-
-  function goBack() {
-    dispatch(pageActions.changePage(1));
-  }
+  const navigate = useNavigate();
 
   function goToEditPage() {
     if (isIn) {
-      dispatch(pageActions.changePage(7));
+      navigate("edit");
     } else {
-      dispatch(pageActions.changePage(2));
-      dispatch(pageActions.setNextPage(7));
+      navigate("/login");
+      dispatch(pageActions.setNextPage(`/issues/${props.id}/edit`));
     }
   }
 
   return (
     <div className={styles["main-cont"]}>
-      <p onClick={goBack}> &lt; Go Back</p>
+      <Link to="/issues">
+        <p> &lt; Go Back</p>
+      </Link>
       <button onClick={goToEditPage}>Edit Feedback</button>
     </div>
   );

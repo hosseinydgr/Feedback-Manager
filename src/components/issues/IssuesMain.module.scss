@@ -1,3 +1,15 @@
 .main-cont {
   width: 60%;
 }
+
+@media (width <= 1200px) {
+  .main-cont {
+    width: 65%;
+  }
+}
+
+@media (width <= 1000px) {
+  .main-cont {
+    width: 100%;
+  }
+}

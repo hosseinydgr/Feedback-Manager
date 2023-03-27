@@ -3,10 +3,14 @@ import { sIssueCommentsContEpic } from "./sIssueCommentsContEpic";
 import { sIsuueAddCommentEpic } from "./sIssueAddCommentEpic";
 import { sIssueCommentUser } from "./sIssueCommentUser";
 import { newIssueUploadFilesEpic } from "./newIssueUploadFilesEpic";
+import appLoginByLocalStorage from "./appLoginByLocalStorage";
+import appGetIssues from "./appGetIssues";
 
 export const rootEpic = combineEpics(
   sIssueCommentsContEpic,
   sIsuueAddCommentEpic,
   sIssueCommentUser,
-  newIssueUploadFilesEpic
+  newIssueUploadFilesEpic,
+  appLoginByLocalStorage,
+  appGetIssues
 );

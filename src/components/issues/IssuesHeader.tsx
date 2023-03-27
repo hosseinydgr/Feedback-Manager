@@ -2,25 +2,27 @@ import { useDispatch, useSelector } from "react-redux/es/exports";
 import { pageActions } from "../../store/page";
 import { useState } from "react";
 import styles from "./IssuesHeader.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
   const dispatch = useDispatch();
   const isIn = useSelector((state: any) => state.auth.isIn);
   // const issues = useSelector((state: any) => state.issues);
   const [sort, setSort] = useState("most-votes");
+  const navigate = useNavigate();
 
   function addFeedbackHandler() {
     if (!isIn) {
-      dispatch(pageActions.changePage(2));
-      dispatch(pageActions.setNextPage(5));
-    } else dispatch(pageActions.changePage(5));
+      navigate("/login");
+      dispatch(pageActions.setNextPage("/issues/new"));
+    } else navigate("/issues/new");
   }
 
   function addLabelHandler() {
     if (!isIn) {
-      dispatch(pageActions.changePage(2));
-      dispatch(pageActions.setNextPage(4));
-    } else dispatch(pageActions.changePage(4));
+      navigate("/login");
+      dispatch(pageActions.setNextPage("/newLabel"));
+    } else navigate("/newLabel");
   }
 
   function sortChangeHandler(e: any) {
@@ -30,7 +32,7 @@ const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
 
   return (
     <div className={styles["main-cont"]} style={{ color: "white" }}>
-      <h3>
+      <h3 className={styles["suggestions-count"]}>
         <span>{props.count}</span> Suggestions
       </h3>
 
@@ -38,6 +40,7 @@ const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
         <label htmlFor="type" className={styles["sort-label"]}>
           Sort by:
         </label>
+        <br className={styles.br} />
         <select
           onInput={sortChangeHandler}
           value={sort}
@@ -49,13 +52,15 @@ const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
         </select>
       </div>
 
-      <button onClick={addFeedbackHandler} className={styles.btn}>
-        + Add Feedback
-      </button>
+      <div className={styles["btns-cont"]}>
+        <button onClick={addFeedbackHandler} className={styles.btn}>
+          + Add Feedback
+        </button>
 
-      <button onClick={addLabelHandler} className={styles.btn}>
-        + Add Label
-      </button>
+        <button onClick={addLabelHandler} className={styles.btn}>
+          + Add Label
+        </button>
+      </div>
     </div>
   );
 };

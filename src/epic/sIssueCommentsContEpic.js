@@ -40,19 +40,3 @@ export const sIssueCommentsContEpic = function (acton$, _) {
     )
   );
 };
-
-//   ajax(`http://localhost:3000/issues/${props.id}/comments`)
-//     .pipe(map((value) => value.response))
-//     .subscribe({
-//       next: function (data: any) {
-//         // console.log(data);
-//         const arr = [];
-//         for (let i = data.length - 1; i >= 0; i--) {
-//           arr.push(
-//             <SIssueComment des={data[i].text} userId={String(data[i].userId)} />
-//           );
-//         }
-//         props.setComments(arr);
-//       },
-//       error: (value: any) => setError(value.message),
-//     }))
