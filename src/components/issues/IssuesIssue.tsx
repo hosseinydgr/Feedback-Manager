@@ -4,6 +4,8 @@ import Label from "../Label";
 import Upvote from "../Upvote";
 import styles from "./IssuesIssue.module.scss";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { observer } from "../../intersectionObserver";
 
 const IssuesIssue: React.FC<{
   id: string;
@@ -17,6 +19,7 @@ const IssuesIssue: React.FC<{
   date: number;
 }> = (props) => {
   const allLabelss = useSelector((state: any) => state.labels.allLabels);
+  const myRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,9 +59,13 @@ const IssuesIssue: React.FC<{
     navigate(`/issues/${props.id}`);
   }
 
+  useEffect(function () {
+    if (myRef.current !== null) observer.observe(myRef.current);
+  }, []);
+
   return (
     <>
-      <div className={styles["main-cont"]}>
+      <div className={styles["main-cont"]} ref={myRef} id={props.id}>
         <div className={styles["flex-cont-content"]}>
           <Upvote id={props.id}>
             {String(props.upVoteCount - props.downVoteCount)}
