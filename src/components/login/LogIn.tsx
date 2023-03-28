@@ -47,6 +47,7 @@ const LogIn: React.FC = (props) => {
               });
               const data = await res.json();
               if (res.ok) {
+                // console.log(data);
                 navigate(nextPage);
                 dispatch(authActions.login(data));
                 localStorage.setItem(

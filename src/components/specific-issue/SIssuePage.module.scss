@@ -3,3 +3,10 @@
   margin: 30px auto;
   //   border: 1px solid black;
 }
+
+@media (width <=760px) {
+  .main-cont {
+    width: calc(100% - 60px);
+    margin: 30px;
+  }
+}

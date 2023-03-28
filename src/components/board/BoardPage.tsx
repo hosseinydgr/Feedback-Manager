@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import BoardHeader from "./BoardHeader";
 import BoardIssue from "./BoardIssue";
@@ -5,6 +6,7 @@ import styles from "./BoardPage.module.scss";
 
 const BoardPage: React.FC = function () {
   const issues = useSelector((state: any) => state.issues);
+  const [activeCategory, setActiveCategory] = useState("1");
   console.log(issues);
 
   const arr1: any[] = [];
@@ -66,6 +68,12 @@ const BoardPage: React.FC = function () {
     }
   }
 
+  function changeCategoryHandler(e: any) {
+    if (e.target.id) {
+      setActiveCategory(e.target.id);
+    }
+  }
+
   return (
     <div className={styles["main-cont"]}>
       <BoardHeader />
@@ -83,6 +91,36 @@ const BoardPage: React.FC = function () {
         <div className={styles.category}>
           <h3>{`Done(${arr3.length})`}</h3>
           <div>{arr3}</div>
+        </div>
+      </div>
+
+      <div className={styles["content-cont-mobile"]}>
+        <div
+          className={styles["categories-mobile"]}
+          onClick={changeCategoryHandler}
+        >
+          <p
+            id="1"
+            className={`${styles["pending-mobile"]} ${
+              activeCategory === "1" ? styles.active : ""
+            }`}
+          >{`Pending(${arr1.length})`}</p>
+          <p
+            id="2"
+            className={`${styles["in-progress-mobile"]} ${
+              activeCategory === "2" ? styles.active : ""
+            }`}
+          >{`In-Progress(${arr2.length})`}</p>
+          <p
+            id="3"
+            className={`${styles["done-mobile"]} ${
+              activeCategory === "3" ? styles.active : ""
+            }`}
+          >{`Done(${arr3.length})`}</p>
+        </div>
+
+        <div className={styles["issues-cont-mobile"]}>
+          {activeCategory === "1" ? arr1 : activeCategory === "2" ? arr2 : arr3}
         </div>
       </div>
     </div>

@@ -11,6 +11,8 @@ const IssuesMain: React.FC = (props) => {
   const activeLabel = useSelector((state: any) => state.labels.activeLabel);
   const [issuesToShow, setIssuesToShow] = useState([]);
 
+  // console.log(issues);
+
   useEffect(
     function () {
       let arr: any = [...issuesToShow];

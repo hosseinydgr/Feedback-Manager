@@ -19,7 +19,8 @@ const IssuesIssue: React.FC<{
   date: number;
 }> = (props) => {
   const allLabelss = useSelector((state: any) => state.labels.allLabels);
-  const myRef = useRef(null);
+  const largeScreenRef = useRef(null);
+  const mobileRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -60,12 +61,14 @@ const IssuesIssue: React.FC<{
   }
 
   useEffect(function () {
-    if (myRef.current !== null) observer.observe(myRef.current);
+    if (largeScreenRef.current !== null)
+      observer.observe(largeScreenRef.current);
+    if (mobileRef.current !== null) observer.observe(mobileRef.current);
   }, []);
 
   return (
     <>
-      <div className={styles["main-cont"]} ref={myRef} id={props.id}>
+      <div className={styles["main-cont"]} ref={largeScreenRef} id={props.id}>
         <div className={styles["flex-cont-content"]}>
           <Upvote id={props.id}>
             {String(props.upVoteCount - props.downVoteCount)}
@@ -89,7 +92,7 @@ const IssuesIssue: React.FC<{
         </div>
       </div>
 
-      <div className={styles["mobile-main-cont"]}>
+      <div className={styles["mobile-main-cont"]} ref={mobileRef}>
         <h3 onClick={goToIssuePage} className={styles.title}>
           {props.title}
         </h3>

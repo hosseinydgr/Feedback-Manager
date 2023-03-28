@@ -29,3 +29,16 @@
   color: white;
   margin-bottom: 10px;
 }
+
+@media (width <= 1000px) {
+  .main-cont {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (width <= 350px) {
+  .main-cont {
+    padding: 20px 10px;
+  }
+}

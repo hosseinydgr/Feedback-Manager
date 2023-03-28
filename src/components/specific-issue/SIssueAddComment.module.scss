@@ -43,3 +43,9 @@
   margin-bottom: 15px;
   font-size: 12px;
 }
+
+@media (width <= 450px) {
+  .main-cont {
+    padding: 30px 10px;
+  }
+}

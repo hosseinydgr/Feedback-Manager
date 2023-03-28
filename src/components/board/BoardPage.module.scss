@@ -2,6 +2,40 @@
   padding: 30px 50px;
 }
 
+.content-cont-mobile {
+  display: none;
+}
+
+.categories-mobile {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #aaa;
+}
+
+.issues-cont-mobile {
+  margin: 0 20px;
+}
+
+.categories-mobile > p {
+  padding: 20px;
+}
+
+.pending-mobile.active {
+  border-bottom: 4px solid #f69e86;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.in-progress-mobile.active {
+  border-bottom: 4px solid #ae1feb;
+  font-weight: bold;
+}
+
+.done-mobile.active {
+  border-bottom: 4px solid #62bcfa;
+  font-weight: bold;
+}
+
 .content-cont {
   display: flex;
   gap: 5%;
@@ -9,4 +43,24 @@
 
 .category {
   width: 30%;
+}
+
+@media (width <= 1000px) {
+  .main-cont {
+    padding: 30px 0;
+  }
+
+  .content-cont {
+    display: none;
+  }
+
+  .content-cont-mobile {
+    display: block;
+  }
+}
+
+@media (width <= 360px) {
+  .categories-mobile > p {
+    padding: 20px 5px;
+  }
 }

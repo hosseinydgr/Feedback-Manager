@@ -135,3 +135,10 @@
   border-radius: 10px;
   background-color: cornsilk;
 }
+
+@media (width < 760px) {
+  .main-cont {
+    width: (calc(100% - 60px));
+    margin: 50px 30px;
+  }
+}

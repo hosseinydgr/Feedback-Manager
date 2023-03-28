@@ -45,6 +45,15 @@ function App() {
     }
 
     dispatch({ type: "getIssues" });
+
+    (async function getFiles() {
+      const res = await fetch("http://localhost:3000/issues/125/files", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      // console.log(res);
+      console.log(data);
+    })();
   }, []);
 
   return <RouterProvider router={router} />;
