@@ -3,9 +3,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { pageActions } from "../store/page";
 import { useNavigate } from "react-router-dom";
+import { issuesActions } from "../store/issues";
 
 const Upvote: React.FC<{ children: string; id: string }> = (props) => {
-  const [votes, setVotes] = useState(props.children);
+  let votes: any;
+  let setVotes: any;
+  [votes, setVotes] = useState(props.children);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const userIsIn = useSelector((state: any) => state.auth.isIn);
@@ -36,6 +39,13 @@ const Upvote: React.FC<{ children: string; id: string }> = (props) => {
                 // console.log(res);
                 if (res.ok) {
                   setVotes(String(Number(votes) + 1));
+                  dispatch(
+                    issuesActions.changeProperty({
+                      id: props.id,
+                      property: "upVoteCount",
+                      value: +votes + 1,
+                    })
+                  );
                 } else {
                   const data = await res.json();
                   throw new Error(data.message);
@@ -80,6 +90,13 @@ const Upvote: React.FC<{ children: string; id: string }> = (props) => {
                 // console.log(res);
                 if (res.ok) {
                   setVotes(String(Number(votes) - 1));
+                  dispatch(
+                    issuesActions.changeProperty({
+                      id: props.id,
+                      property: "downVoteCount",
+                      value: +votes - 1,
+                    })
+                  );
                 } else {
                   const data = await res.json();
                   throw new Error(data.message);

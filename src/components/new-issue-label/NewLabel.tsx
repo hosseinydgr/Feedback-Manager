@@ -37,6 +37,7 @@ const NewLabel: React.FC = (props) => {
               });
               const data = await res.json();
               if (res.ok) {
+                // console.log(data);
                 navigate("/issues");
               } else throw new Error(data.message);
               // console.log(data);

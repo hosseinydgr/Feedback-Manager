@@ -22,6 +22,7 @@ const BoardIssue: React.FC<{
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // console.log(allLabelss);
   const arr = [];
 
   for (let i = 0; i < props.labels.length; i++) {

@@ -4,6 +4,71 @@
   //   border: 1px solid black;
 }
 
+.files-cont {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 25px rgb(233, 233, 233);
+  margin-top: 20px;
+}
+
+.file-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-file {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.other-files {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.file-i .loading {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin: 80px calc((100% - 50px) / 2);
+  padding: 0;
+  box-sizing: border-box;
+  border-top: 4px solid black;
+  border-right: 4px solid gainsboro;
+  border-bottom: 4px solid gainsboro;
+  border-left: 4px solid gainsboro;
+  animation: change 0.7s infinite linear;
+  animation-delay: 0s;
+}
+
+@keyframes change {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (width <=760px) {
   .main-cont {
     width: calc(100% - 60px);

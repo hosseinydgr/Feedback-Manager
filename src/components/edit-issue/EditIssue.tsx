@@ -66,6 +66,7 @@ const EditIssue: React.FC = (props) => {
                 console.log(data, res);
                 if (res.ok) {
                   navigate("/issues");
+                  window.location.reload();
                 } else throw new Error(data.message);
               } catch (err: any) {
                 setError(err.message);

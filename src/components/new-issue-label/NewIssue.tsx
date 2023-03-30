@@ -6,6 +6,7 @@ import styles from "./NewIssue.module.scss";
 import NewIssuesLabelsCont from "./NewIssueLabelsCont";
 import UploadProgressCont from "./UploadProgressCont";
 import { Link, useNavigate } from "react-router-dom";
+import { issuesActions } from "../../store/issues";
 
 const NewIssue: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +19,10 @@ const NewIssue: React.FC = (props) => {
   const myRef: any = useRef();
   const upload = useSelector((state: any) => state.uploadProgress);
   const files = useSelector((state: any) => state.uploadFiles);
+  const uploadedFiles = useSelector((state: any) => state.activeFiles);
   const navigate = useNavigate();
+
+  console.log(uploadedFiles);
 
   function titleChangeHandler(e: any) {
     setTitle(e.target.value);
@@ -36,6 +40,7 @@ const NewIssue: React.FC = (props) => {
   function submitHandler(e: any) {
     e.preventDefault();
     if (!loading) {
+      // console.log(activeLabels);
       setLoading(true);
       setTimeout(
         () =>
@@ -52,13 +57,14 @@ const NewIssue: React.FC = (props) => {
                   description: des,
                   type: type,
                   labelIds: [...activeLabels],
-                  // fieldIds: [],
+                  fileIds: [...uploadedFiles],
                 }),
               });
               const data = await res.json();
               // console.log(data, res);
               if (res.ok) {
                 navigate("/issues");
+                window.location.reload();
               } else throw new Error(data.message);
             } catch (err: any) {
               setError(err.message);

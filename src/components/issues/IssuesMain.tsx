@@ -92,7 +92,11 @@ const IssuesMain: React.FC = (props) => {
   return (
     <div className={styles["main-cont"]}>
       <IssuesHeader setSortType={setSortType} count={issuesToShow.length} />
-      {issuesToShow.length === 0 ? <h2>Loading ...</h2> : issuesToShow}
+      {issuesToShow.length === 0 ? (
+        <div className={styles.loading}></div>
+      ) : (
+        issuesToShow
+      )}
     </div>
   );
 };

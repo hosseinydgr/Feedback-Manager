@@ -7,7 +7,7 @@ import styles from "./BoardPage.module.scss";
 const BoardPage: React.FC = function () {
   const issues = useSelector((state: any) => state.issues);
   const [activeCategory, setActiveCategory] = useState("1");
-  console.log(issues);
+  // console.log(issues);
 
   const arr1: any[] = [];
   const arr2: any[] = [];

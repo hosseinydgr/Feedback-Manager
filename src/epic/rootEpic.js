@@ -5,6 +5,7 @@ import { sIssueCommentUser } from "./sIssueCommentUser";
 import { newIssueUploadFilesEpic } from "./newIssueUploadFilesEpic";
 import appLoginByLocalStorage from "./appLoginByLocalStorage";
 import appGetIssues from "./appGetIssues";
+import appGetLabels from "./appGetLabels";
 
 export const rootEpic = combineEpics(
   sIssueCommentsContEpic,
@@ -12,5 +13,6 @@ export const rootEpic = combineEpics(
   sIssueCommentUser,
   newIssueUploadFilesEpic,
   appLoginByLocalStorage,
-  appGetIssues
+  appGetIssues,
+  appGetLabels
 );

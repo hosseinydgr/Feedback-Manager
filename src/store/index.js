@@ -1,6 +1,7 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { createEpicMiddleware } from "redux-observable";
 import { rootEpic } from "../epic/rootEpic";
+import { activeFileReducer } from "./active-files";
 import { activeIssueReducer } from "./active-issue";
 import { addCommentErrorReducer } from "./addCommentError";
 import { authReducer } from "./auth";
@@ -28,6 +29,7 @@ export const store = configureStore({
     commentUser: commentUserReducer,
     uploadFiles: uploadedFilesReducer,
     uploadProgress: uploadProgressReducer,
+    activeFiles: activeFileReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

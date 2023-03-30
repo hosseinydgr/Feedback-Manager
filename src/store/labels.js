@@ -10,6 +10,9 @@ const labelsSlice = createSlice({
     setActiveLabel(state, action) {
       return { ...state, activeLabel: action.payload };
     },
+    addLabel(state, action) {
+      return { ...state, allLabels: [...state.allLabels, action.payload] };
+    },
   },
 });
 
