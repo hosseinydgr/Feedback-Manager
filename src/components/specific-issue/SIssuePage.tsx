@@ -15,6 +15,7 @@ const SIssuePage: React.FC = (props) => {
   let files: any;
   let setFiles: any;
   [files, setFiles] = useState([]);
+  const [modal, setModal] = useState({ src: "", show: false });
 
   useEffect(function () {
     (async function getFiles() {
@@ -28,23 +29,65 @@ const SIssuePage: React.FC = (props) => {
     })();
   }, []);
 
+  async function downloader(e: any) {
+    const url =
+      e.target.src === undefined ? e.target.dataset.src : e.target.src;
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await res.blob();
+    let blobUrl = window.URL.createObjectURL(data);
+    let a = document.createElement("a");
+    a.download = e.target.dataset.name;
+    a.href = blobUrl;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  function openImgModal(e: any) {
+    setModal({ src: e.target.dataset.src, show: true });
+  }
+
+  function closeImgModal() {
+    setModal({ ...modal, show: false });
+  }
+
   const arr = [];
 
   for (let file of files) {
     if (file.mimeType.split("/")[0] === "image") {
       arr.push(
         <div key={file.id} className={styles["file-div"]}>
-          <img src={file.path} className={styles["image-file"]} />
+          <img
+            src={file.path}
+            data-name={file.name}
+            className={styles["image-file"]}
+            onClick={downloader}
+          />
           <p>{file.name}</p>
           <p>{`${file.size} KB`}</p>
+          <button
+            className={styles["view-img-btn"]}
+            onClick={openImgModal}
+            data-src={file.path}
+          >
+            View
+          </button>
         </div>
       );
     } else if (file.mimeType.split("/")[0] === "text") {
       arr.push(
         <div key={file.id} className={styles["file-div"]}>
-          <a href={file.path} target="_blank" className={styles["other-files"]}>
+          <p
+            data-src={file.path}
+            data-name={file.name}
+            className={styles["other-files"]}
+            onClick={downloader}
+          >
             Text File
-          </a>
+          </p>
           <p>{file.name}</p>
           <p>{`${file.size} KB`}</p>
         </div>
@@ -103,6 +146,17 @@ const SIssuePage: React.FC = (props) => {
           </div>
         </>
       )}
+      <div
+        className={styles.overlay}
+        style={{ display: !modal.show ? "none" : "" }}
+      >
+        <img
+          src="../Assets/multiply-icon.png"
+          className={styles["multiply-icon"]}
+          onClick={closeImgModal}
+        />
+        <img src={modal.src} className={styles["img-view"]} />
+      </div>
     </>
   );
 };

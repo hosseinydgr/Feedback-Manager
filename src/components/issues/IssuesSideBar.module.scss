@@ -64,7 +64,8 @@
     top: -70px;
     left: 0;
     width: 100%;
-    min-height: calc(100vh + 10px);
+    height: calc(100vh + 10px);
+    overflow-y: scroll;
     background-color: rgb(190, 190, 190);
     padding: 20px;
   }

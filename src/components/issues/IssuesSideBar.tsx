@@ -10,10 +10,12 @@ const IssuesSideBar: React.FC = (props) => {
 
   function openSideBar() {
     setShowSideBar(true);
+    document.body.style.overflowY = "hidden";
   }
 
   function closeSideBar() {
     setShowSideBar(false);
+    document.body.style.overflowY = "unset";
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadProgressActions } from "../../store/upload-progress";
 import { uploadedFilesActions } from "../../store/uploaded-files";
@@ -7,6 +7,7 @@ import NewIssuesLabelsCont from "./NewIssueLabelsCont";
 import UploadProgressCont from "./UploadProgressCont";
 import { Link, useNavigate } from "react-router-dom";
 import { issuesActions } from "../../store/issues";
+import { activeFileActions } from "../../store/active-files";
 
 const NewIssue: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -22,7 +23,9 @@ const NewIssue: React.FC = (props) => {
   const uploadedFiles = useSelector((state: any) => state.activeFiles);
   const navigate = useNavigate();
 
-  console.log(uploadedFiles);
+  useEffect(function () {
+    dispatch(activeFileActions.clear(""));
+  }, []);
 
   function titleChangeHandler(e: any) {
     setTitle(e.target.value);
@@ -77,20 +80,16 @@ const NewIssue: React.FC = (props) => {
     }
   }
 
-  async function fileHandler(e: any) {
-    e.preventDefault();
-    // console.log(files);
-    dispatch({ type: "uploadFiles", files: files });
-  }
-
   function fileUploadHandler(e: any) {
     // console.log(e.target.files);
     dispatch(uploadedFilesActions.setFiles(e.target.files));
+    dispatch({ type: "uploadFiles", files: e.target.files });
   }
 
   function addFiles() {
     dispatch(uploadedFilesActions.setFiles([]));
     dispatch(uploadProgressActions.resetUpload());
+    dispatch(activeFileActions.clear(""));
     myRef.current.click();
   }
 
@@ -143,10 +142,6 @@ const NewIssue: React.FC = (props) => {
           </div>
 
           <UploadProgressCont files={files} upload={upload} />
-
-          <button onClick={fileHandler} className={styles["send-files-btn"]}>
-            Send Files
-          </button>
         </div>
 
         <button

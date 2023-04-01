@@ -60,6 +60,43 @@
   animation-delay: 0s;
 }
 
+.view-img-btn {
+  background-color: #00ffd0;
+  padding: 10px 23px;
+  border: none;
+  color: rgb(0, 59, 186);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  background-color: rgba(131, 131, 131, 0.5);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 60px;
+  // display: none;
+}
+
+.multiply-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.img-view {
+  height: 90vh;
+}
+
 @keyframes change {
   0% {
     transform: rotate(0deg);
