@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState: any[] = [];
+
 const issuesSlice = createSlice({
   name: "issuesSlice",
-  initialState: [],
+  initialState,
   reducers: {
     getIssues(state, action) {
+      // console.log(action.payload);
       return action.payload;
     },
 

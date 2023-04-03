@@ -33,6 +33,7 @@ const BoardIssue: React.FC<{
             id={allLabelss[j].id}
             color={allLabelss[j].color}
             key={allLabelss[j].id}
+            issueId={props.id}
           >
             {allLabelss[j].name}
           </Label>

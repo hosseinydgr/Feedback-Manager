@@ -6,6 +6,12 @@
   padding: 20px 0;
 }
 
+.btns-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .main-cont button {
   background-color: #4661e6;
   padding: 10px 23px;
@@ -13,6 +19,23 @@
   color: white;
   border-radius: 7px;
   cursor: pointer;
+}
+
+.main-cont button.delete-btn {
+  background-color: moccasin;
+  color: black;
+}
+
+.error {
+  border: 1px solid red;
+  color: red;
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.placeholder {
+  height: 36px;
 }
 
 .main-cont p {

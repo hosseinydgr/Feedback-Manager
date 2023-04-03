@@ -48,10 +48,12 @@ const SIssuePage: React.FC = (props) => {
 
   function openImgModal(e: any) {
     setModal({ src: e.target.dataset.src, show: true });
+    document.body.style.overflowY = "hidden";
   }
 
   function closeImgModal() {
     setModal({ ...modal, show: false });
+    document.body.style.overflowY = "unset";
   }
 
   const arr = [];

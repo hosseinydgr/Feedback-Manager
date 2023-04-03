@@ -6,15 +6,15 @@ import { commentsActions } from "../store/comments";
 import { Observable, of } from "rxjs";
 import { commentsLoadErrorActions } from "../store/commentsLoadError";
 
-export const sIssueCommentsContEpic = function (acton$, _) {
+export const sIssueCommentsContEpic = function (acton$: any, _: any) {
   return acton$.pipe(
     ofType("getComments"),
-    concatMap((action) =>
+    concatMap((action: any) =>
       ajax(`http://localhost:3000/issues/${action.payload}/comments`).pipe(
         map((value) => value.response),
-        map((data) => {
+        map((data: any) => {
           //   console.log(data);
-          const arr = [];
+          const arr: any[] = [];
           for (let i = data.length - 1; i >= 0; i--) {
             arr.push(
               <SIssueComment

@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState: any[] = [];
+
 const uploadedFilesSlice = createSlice({
   name: "uploadedFilesSlice",
-  initialState: [],
+  initialState,
   reducers: {
     setFiles: function (_, action) {
       const arr = [];

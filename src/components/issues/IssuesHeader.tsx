@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
   const dispatch = useDispatch();
   const isIn = useSelector((state: any) => state.auth.isIn);
+  const isAdmin = useSelector((state: any) => state.auth.isAdmin);
+
   // const issues = useSelector((state: any) => state.issues);
   const [sort, setSort] = useState("most-votes");
   const navigate = useNavigate();
@@ -57,9 +59,14 @@ const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
           + Add Feedback
         </button>
 
-        <button onClick={addLabelHandler} className={styles.btn}>
-          + Add Label
-        </button>
+        {isAdmin && (
+          <button
+            onClick={addLabelHandler}
+            className={`${styles.btn} ${styles["add-label-btn"]}`}
+          >
+            + Add Label
+          </button>
+        )}
       </div>
     </div>
   );

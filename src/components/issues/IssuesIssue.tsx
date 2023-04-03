@@ -5,7 +5,8 @@ import Upvote from "../Upvote";
 import styles from "./IssuesIssue.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { observer } from "../../intersectionObserver";
+// import { observer } from "../../intersectionObserver";
+import { showIssuesActions } from "../../store/show-issues";
 
 const IssuesIssue: React.FC<{
   id: string;
@@ -23,6 +24,23 @@ const IssuesIssue: React.FC<{
   const mobileRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const showIssue = useSelector((state: any) => state.showIssues[props.id]);
+
+  let observer = new IntersectionObserver(function (entries, self) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        preloadIssue(entry.target);
+        self.unobserve(entry.target);
+      }
+    });
+  });
+
+  function preloadIssue(issueDiv: any) {
+    // issueDiv.style.display = "flex";
+    // console.log(issueDiv.id);
+    console.log(issueDiv.id);
+    setTimeout(() => dispatch(showIssuesActions.show(issueDiv.id)), 1500);
+  }
 
   const arr = [];
 
@@ -34,6 +52,7 @@ const IssuesIssue: React.FC<{
             id={allLabelss[j].id}
             color={allLabelss[j].color}
             key={allLabelss[j].id}
+            issueId={props.id}
           >
             {allLabelss[j].name}
           </Label>
@@ -68,50 +87,69 @@ const IssuesIssue: React.FC<{
 
   return (
     <>
-      <div className={styles["main-cont"]} ref={largeScreenRef} id={props.id}>
-        <div className={styles["flex-cont-content"]}>
-          <Upvote id={props.id}>
-            {String(props.upVoteCount - props.downVoteCount)}
-          </Upvote>
+      <div
+        className={`${styles["main-cont"]} ${
+          showIssue ? "" : styles.placeholder
+        }`}
+        ref={largeScreenRef}
+        id={props.id}
+      >
+        {showIssue && (
+          <>
+            <div className={styles["flex-cont-content"]}>
+              <Upvote id={props.id}>
+                {String(props.upVoteCount - props.downVoteCount)}
+              </Upvote>
 
-          <div className={styles.content}>
+              <div className={styles.content}>
+                <h3 onClick={goToIssuePage} className={styles.title}>
+                  {props.title}
+                </h3>
+                <p className={styles.description}>{props.des}</p>
+                {arr}
+              </div>
+            </div>
+            <div className={styles["flex-cont"]}>
+              <img
+                src="../Assets/comment-icon.png"
+                className={styles["comment-icon"]}
+              />
+              <p>{props.commentsCount}</p>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div
+        className={`${styles["mobile-main-cont"]} ${
+          showIssue ? "" : styles["mobile-placeholder"]
+        }`}
+        ref={mobileRef}
+        id={props.id}
+      >
+        {showIssue && (
+          <>
             <h3 onClick={goToIssuePage} className={styles.title}>
               {props.title}
             </h3>
             <p className={styles.description}>{props.des}</p>
-            {arr}
-          </div>
-        </div>
+            <div className={styles["mobile-labels-cont"]}>{arr}</div>
 
-        <div className={styles["flex-cont"]}>
-          <img
-            src="../Assets/comment-icon.png"
-            className={styles["comment-icon"]}
-          />
-          <p>{props.commentsCount}</p>
-        </div>
-      </div>
+            <div className={styles["mobile-flex-cont"]}>
+              <Upvote id={props.id}>
+                {String(props.upVoteCount - props.downVoteCount)}
+              </Upvote>
 
-      <div className={styles["mobile-main-cont"]} ref={mobileRef}>
-        <h3 onClick={goToIssuePage} className={styles.title}>
-          {props.title}
-        </h3>
-        <p className={styles.description}>{props.des}</p>
-        <div className={styles["mobile-labels-cont"]}>{arr}</div>
-
-        <div className={styles["mobile-flex-cont"]}>
-          <Upvote id={props.id}>
-            {String(props.upVoteCount - props.downVoteCount)}
-          </Upvote>
-
-          <div className={styles["flex-cont"]}>
-            <img
-              src="../Assets/comment-icon.png"
-              className={styles["comment-icon"]}
-            />
-            <p>{props.commentsCount}</p>
-          </div>
-        </div>
+              <div className={styles["flex-cont"]}>
+                <img
+                  src="../Assets/comment-icon.png"
+                  className={styles["comment-icon"]}
+                />
+                <p>{props.commentsCount}</p>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

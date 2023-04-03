@@ -24,7 +24,7 @@ const NewIssue: React.FC = (props) => {
   const navigate = useNavigate();
 
   useEffect(function () {
-    dispatch(activeFileActions.clear(""));
+    dispatch(activeFileActions.clear());
   }, []);
 
   function titleChangeHandler(e: any) {
@@ -89,7 +89,7 @@ const NewIssue: React.FC = (props) => {
   function addFiles() {
     dispatch(uploadedFilesActions.setFiles([]));
     dispatch(uploadProgressActions.resetUpload());
-    dispatch(activeFileActions.clear(""));
+    dispatch(activeFileActions.clear());
     myRef.current.click();
   }
 

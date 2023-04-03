@@ -13,6 +13,8 @@ import { labelsReducer } from "./labels";
 import { pageReducer } from "./page";
 import { uploadProgressReducer } from "./upload-progress";
 import { uploadedFilesReducer } from "./uploaded-files";
+import { deleteIssueReducer } from "./delete-issue";
+import { showIssuesReducer } from "./show-issues";
 
 const epicMiddleware = createEpicMiddleware();
 
@@ -30,6 +32,8 @@ export const store = configureStore({
     uploadFiles: uploadedFilesReducer,
     uploadProgress: uploadProgressReducer,
     activeFiles: activeFileReducer,
+    deleteIssue: deleteIssueReducer,
+    showIssues: showIssuesReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

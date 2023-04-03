@@ -6,6 +6,26 @@
   border-radius: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
+  position: relative;
+}
+
+.delete {
+  position: absolute;
+  top: -7.5px;
+  right: -7.5px;
+  background-color: moccasin;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7.5px;
+  cursor: pointer;
+}
+
+.delete > img {
+  width: 80%;
+  height: 80%;
 }
 
 @media (width <= 520px) {

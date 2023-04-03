@@ -94,7 +94,7 @@ const Upvote: React.FC<{ children: string; id: string }> = (props) => {
                     issuesActions.changeProperty({
                       id: props.id,
                       property: "downVoteCount",
-                      value: +votes - 1,
+                      value: +votes + 1,
                     })
                   );
                 } else {

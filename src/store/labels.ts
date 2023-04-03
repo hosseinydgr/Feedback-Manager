@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const allLabels: any[] = [];
+
 const labelsSlice = createSlice({
   name: "labelsSlice",
-  initialState: { allLabels: [], activeLabel: "" },
+  initialState: { allLabels, activeLabel: "" },
   reducers: {
     setLabels(state, action) {
       return { ...state, allLabels: action.payload };

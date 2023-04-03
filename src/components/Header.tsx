@@ -7,6 +7,7 @@ import styles from "./Header.module.scss";
 
 const Header: React.FC = (props) => {
   const isIn = useSelector((state: any) => state.auth.isIn);
+  const isAdmin = useSelector((state: any) => state.auth.isAdmin);
   const user = useSelector((state: any) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Header: React.FC = (props) => {
     content = (
       <button className={styles["action-btn"]} onClick={signOutHandler}>
         {user.name}
+        {isAdmin && <p className={styles["admin-label"]}>&#9733;</p>}
       </button>
     );
   } else {
