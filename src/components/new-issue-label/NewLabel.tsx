@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const NewLabel: React.FC = (props) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#ff0000");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const NewLabel: React.FC = (props) => {
 
   function colorChangeHandler(e: any) {
     setColor(e.target.value);
+    console.log(+`0x${e.target.value.substring(1)}`);
   }
 
   function submitHandler(e: any) {
@@ -33,14 +34,16 @@ const NewLabel: React.FC = (props) => {
                 headers: {
                   "Content-Type": "application/json;charset=utf-8",
                 },
-                body: JSON.stringify({ name: name, color: Number(color) }),
+                body: JSON.stringify({
+                  name: name,
+                  color: +`0x${color.substring(1)}`,
+                }),
               });
               const data = await res.json();
+              console.log(data);
               if (res.ok) {
-                // console.log(data);
                 navigate("/issues");
               } else throw new Error(data.message);
-              // console.log(data);
             } catch (err: any) {
               setError(err.message);
               setTimeout(() => setError(""), 3000);
@@ -72,7 +75,7 @@ const NewLabel: React.FC = (props) => {
           Color
         </label>
         <input
-          type="text"
+          type="color"
           id="color"
           value={color}
           onChange={colorChangeHandler}

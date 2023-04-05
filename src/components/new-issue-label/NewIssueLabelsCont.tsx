@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect } from "react";
 import NewIssueLabel from "./NewIssueLabel";
 import styles from "./NewIssuesLabelsCont.module.scss";
 
@@ -8,7 +8,12 @@ const NewIssuesLabelsCont: React.FC<{
   setActiveLabels: any;
 }> = (props) => {
   const labels = useSelector((state: any) => state.labels.allLabels);
+  const dispatch = useDispatch();
   // console.log(labels);
+
+  useEffect(function () {
+    if (labels.length === 0) dispatch({ type: "getLabels" });
+  }, []);
 
   function removeLabel(id: string) {
     const newState = [...props.activeLabels];

@@ -22,14 +22,6 @@ const IssuesLabelsContMobile: React.FC = (props) => {
   );
   // console.log(labels);
 
-  useEffect(function () {
-    ajax("http://localhost:3000/labels")
-      .pipe(map((value) => value.response))
-      .subscribe((value: any) => {
-        dispatch(labelsActions.setLabels(value));
-      });
-  }, []);
-
   return <div className={styles["main-cont"]}>{labelsToShow}</div>;
 };
 

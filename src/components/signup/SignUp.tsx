@@ -14,6 +14,9 @@ const SignUp: React.FC = (props) => {
   const [loading, setLoading] = useState(false);
   const nextPage = useSelector((state: any) => state.page.nextPage);
   const navigate = useNavigate();
+  const isIn = useSelector((state: any) => state.auth.isIn);
+
+  if (isIn) navigate("/issues");
 
   function nameChangeHandler(e: any) {
     setName(e.target.value);

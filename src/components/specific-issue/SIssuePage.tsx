@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IssuesIssue from "../issues/IssuesIssue";
 import SIssueAddComment from "./SIssueAddComment";
 import SIssueCommentsCont from "./SIssueCommentsCont";
@@ -9,13 +9,17 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 
 const SIssuePage: React.FC = (props) => {
-  let issueId = useSelector((state: any) => state.activeIssue.id);
-  const allIssues = useSelector((state: any) => state.issues);
+  const dispatch = useDispatch();
+  const issue = useSelector((state: any) => state.activeIssue);
   const params = useParams();
   let files: any;
   let setFiles: any;
   [files, setFiles] = useState([]);
   const [modal, setModal] = useState({ src: "", show: false });
+
+  console.log(issue);
+
+  const issueId = params.issueId;
 
   useEffect(function () {
     (async function getFiles() {
@@ -27,6 +31,10 @@ const SIssuePage: React.FC = (props) => {
       // console.log(res);
       console.log(data);
     })();
+
+    if (issue.id === undefined) {
+      dispatch({ type: "getSpecificIssue", payload: { id: issueId } });
+    }
   }, []);
 
   async function downloader(e: any) {
@@ -107,18 +115,9 @@ const SIssuePage: React.FC = (props) => {
     }
   }
 
-  if (issueId === undefined) issueId = params.issueId;
-  // console.log(allIssues);
-  // console.log(issueId);
-
-  let issue;
-  if (allIssues.length !== 0)
-    issue = allIssues.filter((item: any) => item.id == issueId)[0];
-  // console.log(issue);
-
   return (
     <>
-      {issue === undefined ? (
+      {issue.id === undefined ? (
         <div className={styles.loading}></div>
       ) : (
         <>
@@ -130,11 +129,11 @@ const SIssuePage: React.FC = (props) => {
               id={issue.id}
               userId={issue.userId}
               title={issue.title}
-              des={issue.des}
+              des={issue.description}
               commentsCount={issue.commentsCount}
-              labels={issue.labels}
-              upVoteCount={issue.upVoteCount}
-              downVoteCount={issue.downVoteCount}
+              labels={issue.labels || []}
+              upVoteCount={issue.upVoteCount || 0}
+              downVoteCount={issue.downVoteCount || 0}
               date={issue.date}
             />
             {arr.length === 0 || (

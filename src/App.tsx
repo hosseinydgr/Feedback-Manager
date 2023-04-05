@@ -43,9 +43,6 @@ function App() {
         },
       });
     }
-
-    dispatch({ type: "getIssues" });
-    dispatch({ type: "getLabels" });
     // (async function getUser() {
     //   const res = await fetch("http://localhost:3000/users");
     //   const data = await res.json();

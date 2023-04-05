@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import BoardHeader from "./BoardHeader";
 import BoardIssue from "./BoardIssue";
 import styles from "./BoardPage.module.scss";
@@ -7,7 +7,12 @@ import styles from "./BoardPage.module.scss";
 const BoardPage: React.FC = function () {
   const issues = useSelector((state: any) => state.issues);
   const [activeCategory, setActiveCategory] = useState("1");
+  const dispatch = useDispatch();
   // console.log(issues);
+
+  useEffect(function () {
+    if (issues.length === 0) dispatch({ type: "getIssues" });
+  }, []);
 
   const arr1: any[] = [];
   const arr2: any[] = [];

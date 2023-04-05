@@ -12,16 +12,36 @@
   flex-direction: column;
 }
 
-.main-cont > form input {
+.main-cont > form input[type="text"] {
   padding: 10px 15px;
   border: none;
   border-bottom: 1px solid black;
   outline: none;
 }
 
-.main-cont > form input[type="password"] {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  letter-spacing: 2px;
+// .main-cont > form input[type="color"] {
+//   width: 100%;
+//   cursor: pointer;
+// }
+
+.main-cont > form input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.main-cont > form input[type="color"]::-webkit-color-swatch {
+  border-radius: 50px;
+  border: none;
+}
+.main-cont > form input[type="color"]::-moz-color-swatch {
+  border-radius: 50px;
+  border: none;
 }
 
 .main-cont > form label {

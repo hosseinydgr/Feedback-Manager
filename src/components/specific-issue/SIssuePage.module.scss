@@ -94,8 +94,25 @@
 }
 
 .img-view {
-  height: 90vh;
+  max-height: 90vh;
+  max-width: 90vw;
   border-radius: 10px;
+}
+
+.loading {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  margin: calc((100vh - 70px) / 2) auto;
+  padding: 0;
+  box-sizing: border-box;
+  border-top: 4px solid black;
+  border-right: 4px solid gainsboro;
+  border-bottom: 4px solid gainsboro;
+  border-left: 4px solid gainsboro;
+  animation: change 0.7s infinite linear;
+  animation-delay: 0s;
 }
 
 @keyframes change {

@@ -14,6 +14,9 @@ const LogIn: React.FC = (props) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const isIn = useSelector((state: any) => state.auth.isIn);
+
+  if (isIn) navigate("/issues");
 
   function emailChangeHandler(e: any) {
     setEmail(e.target.value);

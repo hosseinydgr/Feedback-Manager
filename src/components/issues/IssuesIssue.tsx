@@ -36,9 +36,7 @@ const IssuesIssue: React.FC<{
   });
 
   function preloadIssue(issueDiv: any) {
-    // issueDiv.style.display = "flex";
     // console.log(issueDiv.id);
-    console.log(issueDiv.id);
     setTimeout(() => dispatch(showIssuesActions.show(issueDiv.id)), 1500);
   }
 
@@ -68,7 +66,7 @@ const IssuesIssue: React.FC<{
         id: props.id,
         userId: props.userId,
         title: props.title,
-        des: props.des,
+        description: props.des,
         commentsCount: props.commentsCount,
         labels: props.labels,
         upVoteCount: props.upVoteCount,

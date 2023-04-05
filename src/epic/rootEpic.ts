@@ -7,6 +7,7 @@ import appLoginByLocalStorage from "./appLoginByLocalStorage";
 import appGetIssues from "./appGetIssues";
 import appGetLabels from "./appGetLabels";
 import sIssueDeleteIssue from "./sIssueDeleteIssue";
+import getSpecificIssue from "./getSpecificIssue";
 
 export const rootEpic = combineEpics(
   sIssueCommentsContEpic,
@@ -16,5 +17,6 @@ export const rootEpic = combineEpics(
   appLoginByLocalStorage,
   appGetIssues,
   appGetLabels,
-  sIssueDeleteIssue
+  sIssueDeleteIssue,
+  getSpecificIssue
 );
