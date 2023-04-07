@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: any = [];
+const initialState: any = { issues: [], loading: "true" };
 
 const issuesSlice = createSlice({
   name: "issuesSlice",
@@ -8,7 +8,11 @@ const issuesSlice = createSlice({
   reducers: {
     getIssues(state, action) {
       // console.log(action.payload);
-      return action.payload;
+      return { ...state, issues: action.payload };
+    },
+
+    updateIssues(state, action) {
+      return { ...state, issues: [...state.issues, ...action.payload] };
     },
 
     changeProperty(state, action) {
@@ -24,7 +28,11 @@ const issuesSlice = createSlice({
           });
         }
       }
-      return arr;
+      return { ...state, issues: arr };
+    },
+
+    setLoading(state, action) {
+      return { ...state, loading: action.payload };
     },
   },
 });

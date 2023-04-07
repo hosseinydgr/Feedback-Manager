@@ -3,40 +3,63 @@ import IssuesIssue from "./IssuesIssue";
 import styles from "./IssuesMain.module.scss";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import IssuesHeader from "./IssuesHeader";
+import { issuesActions } from "../../store/issues";
 
 const IssuesMain: React.FC = (props) => {
   const dispatch = useDispatch();
-  const issues: any = useSelector((state: any) => state.issues);
-  const [sortType, setSortType] = useState("most-votes");
+  const issues: any = useSelector((state: any) => state.issues.issues);
+  const loading = useSelector((state: any) => state.issues.loading);
   const activeLabel = useSelector((state: any) => state.labels.activeLabel);
+  const [sortType, setSortType] = useState("Date-ASC");
   const [issuesToShow, setIssuesToShow] = useState([]);
+  const time = useRef(1);
+  const sortQuery = useRef("Date-ASC");
 
   // console.log(issues);
+  useEffect(function () {
+    if (issues.length === 0)
+      dispatch({
+        type: "getIssues",
+        payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
+      });
+    window.addEventListener("scroll", scrollHandler);
+  }, []);
+
+  function scrollHandler() {
+    if (time.current <= 1) {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 1
+      ) {
+        console.log(sortQuery.current);
+        dispatch(issuesActions.setLoading("loadMore"));
+        dispatch({
+          type: "updateIssues",
+          payload: {
+            offset: time.current * 20,
+            sortBy: sortQuery.current.split("-")[0],
+            sortType: sortQuery.current.split("-")[1],
+          },
+        });
+        console.log(time.current);
+        time.current++;
+      }
+    }
+  }
 
   useEffect(
     function () {
-      let arr: any = [...issuesToShow];
-      if (sortType === "") arr = [];
-      else if (sortType === "most-votes") {
-        arr.sort(function (a: any, b: any) {
-          return (
-            b.props.upVoteCount -
-            b.props.downVoteCount -
-            (a.props.upVoteCount - a.props.downVoteCount)
-          );
-        });
-      } else if (sortType === "most-comments") {
-        arr.sort(function (a: any, b: any) {
-          return b.props.commentsCount - a.props.commentsCount;
-        });
-      } else if (sortType === "date") {
-        arr.sort(function (a: any, b: any) {
-          return (
-            new Date(b.props.date).getTime() - new Date(a.props.date).getTime()
-          );
-        });
-      }
-      setIssuesToShow(arr);
+      dispatch(issuesActions.setLoading("true"));
+      dispatch({
+        type: "getIssues",
+        payload: {
+          offset: 0,
+          sortBy: sortType.split("-")[0],
+          sortType: sortType.split("-")[1],
+        },
+      });
+      time.current = 1;
+      sortQuery.current = sortType;
     },
     [sortType]
   );
@@ -63,26 +86,6 @@ const IssuesMain: React.FC = (props) => {
           );
       }
 
-      if (sortType === "most-votes") {
-        arr.sort(function (a: any, b: any) {
-          return (
-            b.props.upVoteCount -
-            b.props.downVoteCount -
-            (a.props.upVoteCount - a.props.downVoteCount)
-          );
-        });
-      } else if (sortType === "most-comments") {
-        arr.sort(function (a: any, b: any) {
-          return b.props.commentsCount - a.props.commentsCount;
-        });
-      } else if (sortType === "date") {
-        arr.sort(function (a: any, b: any) {
-          return (
-            new Date(b.props.date).getTime() - new Date(a.props.date).getTime()
-          );
-        });
-      }
-
       // console.log(arr);
       setIssuesToShow(arr);
     },
@@ -92,10 +95,13 @@ const IssuesMain: React.FC = (props) => {
   return (
     <div className={styles["main-cont"]}>
       <IssuesHeader setSortType={setSortType} count={issuesToShow.length} />
-      {issuesToShow.length === 0 ? (
+      {loading === "true" ? (
         <div className={styles.loading}></div>
       ) : (
-        issuesToShow
+        <>
+          {issuesToShow}
+          {loading === "loadMore" && <div className={styles.loading}></div>}
+        </>
       )}
     </div>
   );

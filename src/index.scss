@@ -1,9 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@600&display=swap");
+
+// @font-face {
+//   font-family: "gotham";
+//   src: url("../public/Assets/fonts/gotham-6-cufonfonts/JostVariableFont_wght.ttf");
+//   font-weight: 450;
+//   font-style: normal;
+// }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  // font-family: "Shantell Sans", cursive;
+  font-family: "Edu NSW ACT Foundation", cursive;
 }
 
 body {

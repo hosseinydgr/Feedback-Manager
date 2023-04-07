@@ -1,0 +1,53 @@
+.main-cont {
+  width: 260px;
+  border: 1px solid rgb(64, 64, 64);
+  position: absolute;
+  top: 45px;
+  z-index: 5;
+}
+
+.main-cont img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.info {
+  background-color: rgb(64, 64, 64);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabs {
+  padding: 20px;
+  background-color: white;
+}
+
+.flex-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.sign-out {
+  border-top: 1px solid rgb(161, 161, 161);
+  padding-top: 10px;
+  margin-top: 25px;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}

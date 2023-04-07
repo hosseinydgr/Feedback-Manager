@@ -10,7 +10,6 @@ const IssuesPage: React.FC = (props) => {
   const issues = useSelector((state: any) => state.issues);
 
   useEffect(function () {
-    if (issues.length === 0) dispatch({ type: "getIssues" });
     dispatch({ type: "getLabels" });
   }, []);
 

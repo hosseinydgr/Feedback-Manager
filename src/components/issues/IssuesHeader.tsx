@@ -10,7 +10,7 @@ const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
   const isAdmin = useSelector((state: any) => state.auth.isAdmin);
 
   // const issues = useSelector((state: any) => state.issues);
-  const [sort, setSort] = useState("most-votes");
+  const [sort, setSort] = useState("Date-ASC");
   const navigate = useNavigate();
 
   function addFeedbackHandler() {
@@ -48,9 +48,10 @@ const IssuesHeader: React.FC<{ setSortType: any; count: number }> = (props) => {
           value={sort}
           className={styles["select-sort"]}
         >
-          <option value="most-votes">Most Votes</option>
-          <option value="most-comments">Most Comments</option>
-          <option value="date">Date</option>
+          <option value="Votes-ASC">Votes-ASC</option>
+          <option value="Votes-DESC">Votes-DESC</option>
+          <option value="Date-ASC">Date-ASC</option>
+          <option value="Date-DESC">Date-DESC</option>
         </select>
       </div>
 

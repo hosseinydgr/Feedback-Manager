@@ -5,13 +5,17 @@ import BoardIssue from "./BoardIssue";
 import styles from "./BoardPage.module.scss";
 
 const BoardPage: React.FC = function () {
-  const issues = useSelector((state: any) => state.issues);
+  const issues = useSelector((state: any) => state.issues.issues);
   const [activeCategory, setActiveCategory] = useState("1");
   const dispatch = useDispatch();
   // console.log(issues);
 
   useEffect(function () {
-    if (issues.length === 0) dispatch({ type: "getIssues" });
+    if (issues.length === 0)
+      dispatch({
+        type: "getIssues",
+        payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
+      });
   }, []);
 
   const arr1: any[] = [];

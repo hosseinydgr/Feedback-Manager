@@ -14,6 +14,16 @@ const authSlice = createSlice({
       state.user = {};
       state.isAdmin = false;
     },
+    updateInfo(state, action) {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: action.payload.name,
+          email: action.payload.email,
+        },
+      };
+    },
   },
 });
 

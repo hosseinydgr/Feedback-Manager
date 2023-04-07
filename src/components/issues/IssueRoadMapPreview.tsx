@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const IssueRoadMapPreview: React.FC = function () {
-  const issues = useSelector((state: any) => state.issues);
+  const issues = useSelector((state: any) => state.issues.issues);
 
   let inProgressCount = 0;
   let doneCount = 0;

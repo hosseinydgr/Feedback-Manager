@@ -4,6 +4,8 @@ import { authActions } from "../store/auth";
 import { pageActions } from "../store/page";
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
+import UserControls from "./UserControls";
+import ChangeUserInfo from "./ChangeUserInfo";
 
 const Header: React.FC = (props) => {
   const isIn = useSelector((state: any) => state.auth.isIn);
@@ -11,14 +13,25 @@ const Header: React.FC = (props) => {
   const user = useSelector((state: any) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isControlsOpen, setIsControlsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let content;
   if (isIn) {
     content = (
-      <button className={styles["action-btn"]} onClick={signOutHandler}>
-        {user.name}
-        {isAdmin && <p className={styles["admin-label"]}>&#9733;</p>}
-      </button>
+      <>
+        <button className={styles["action-btn"]} onClick={openUserControl}>
+          {user.name}
+          {isAdmin && <p className={styles["admin-label"]}>&#9733;</p>}
+        </button>
+        {isControlsOpen && (
+          <UserControls
+            closeFunction={setIsControlsOpen}
+            openModal={setIsModalOpen}
+          />
+        )}
+        {isModalOpen && <ChangeUserInfo closeFunction={setIsModalOpen} />}
+      </>
     );
   } else {
     content = (
@@ -33,9 +46,9 @@ const Header: React.FC = (props) => {
     navigate("/login");
   }
 
-  function signOutHandler() {
-    dispatch(authActions.signOut());
-    localStorage.setItem("user", "");
+  function openUserControl() {
+    setIsControlsOpen(true);
+    document.body.style.overflowY = "hidden";
   }
 
   return (
