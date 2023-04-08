@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BoardHeader from "./BoardHeader";
 import BoardIssue from "./BoardIssue";
 import styles from "./BoardPage.module.scss";
+import { issuesActions } from "../../store/issues";
 
 const BoardPage: React.FC = function () {
   const issues = useSelector((state: any) => state.issues.issues);
   const [activeCategory, setActiveCategory] = useState("1");
   const dispatch = useDispatch();
+  const mainContRef: any = useRef(null);
+  const time = useRef(0);
   // console.log(issues);
 
   useEffect(function () {
@@ -16,7 +19,39 @@ const BoardPage: React.FC = function () {
         type: "getIssues",
         payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
       });
+    // window.addEventListener("scroll", scrollHandler);
+    // time.current++;
   }, []);
+
+  function scrollHandler() {
+    // console.log(time.current);
+
+    // console.log(
+    //   window.innerHeight + window.scrollY >=
+    //     mainContRef.current?.offsetHeight + mainContRef.current?.offsetTop
+    // );
+    if (mainContRef.current !== null) {
+      if (time.current <= 1) {
+        if (
+          window.innerHeight + window.scrollY >=
+          mainContRef.current?.offsetHeight + mainContRef.current.offsetTop
+        ) {
+          // console.log(sortQuery.current);
+          dispatch(issuesActions.setLoading("loadMore"));
+          dispatch({
+            type: "updateIssues",
+            payload: {
+              offset: time.current * 20,
+              sortBy: "Date",
+              sortType: "ASC",
+            },
+          });
+          // console.log(time.current);
+          time.current++;
+        }
+      }
+    }
+  }
 
   const arr1: any[] = [];
   const arr2: any[] = [];
@@ -84,7 +119,7 @@ const BoardPage: React.FC = function () {
   }
 
   return (
-    <div className={styles["main-cont"]}>
+    <div className={styles["main-cont"]} ref={mainContRef}>
       <BoardHeader />
       <div className={styles["content-cont"]}>
         <div className={styles.category}>

@@ -14,29 +14,37 @@ const IssuesMain: React.FC = (props) => {
   const [issuesToShow, setIssuesToShow] = useState([]);
   const time = useRef(0);
   const sortQuery = useRef("Date-ASC");
+  const mainContRef: any = useRef(null);
 
   // console.log(time.current);
 
   function scrollHandler() {
-    console.log(time.current);
+    // console.log(time.current);
 
-    if (time.current <= 1) {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 1
-      ) {
-        // console.log(sortQuery.current);
-        dispatch(issuesActions.setLoading("loadMore"));
-        dispatch({
-          type: "updateIssues",
-          payload: {
-            offset: time.current * 20,
-            sortBy: sortQuery.current.split("-")[0],
-            sortType: sortQuery.current.split("-")[1],
-          },
-        });
-        // console.log(time.current);
-        time.current++;
+    // console.log(
+    //   window.innerHeight + window.scrollY >=
+    //     mainContRef.current?.offsetHeight + mainContRef.current?.offsetTop
+    // );
+    if (mainContRef.current !== null) {
+      if (time.current <= 1) {
+        if (
+          window.innerHeight + window.scrollY >=
+          mainContRef.current.offsetHeight + mainContRef.current.offsetTop
+        ) {
+          console.log("Helloo");
+          // console.log(sortQuery.current);
+          dispatch(issuesActions.setLoading("loadMore"));
+          dispatch({
+            type: "updateIssues",
+            payload: {
+              offset: time.current * 20,
+              sortBy: sortQuery.current.split("-")[0],
+              sortType: sortQuery.current.split("-")[1],
+            },
+          });
+          // console.log(time.current);
+          time.current++;
+        }
       }
     }
   }
@@ -94,13 +102,13 @@ const IssuesMain: React.FC = (props) => {
         type: "getIssues",
         payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
       });
-      window.addEventListener("scroll", scrollHandler);
     }
+    window.addEventListener("scroll", scrollHandler);
     time.current++;
   }, []);
 
   return (
-    <div className={styles["main-cont"]}>
+    <div className={styles["main-cont"]} ref={mainContRef}>
       <IssuesHeader setSortType={setSortType} count={issuesToShow.length} />
       {loading === "true" ? (
         <div className={styles.loading}></div>
