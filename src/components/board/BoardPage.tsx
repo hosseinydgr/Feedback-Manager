@@ -4,13 +4,18 @@ import BoardHeader from "./BoardHeader";
 import BoardIssue from "./BoardIssue";
 import styles from "./BoardPage.module.scss";
 import { issuesActions } from "../../store/issues";
+import { issuesOffsetActions } from "../../store/issues-offset";
 
 const BoardPage: React.FC = function () {
   const issues = useSelector((state: any) => state.issues.issues);
   const [activeCategory, setActiveCategory] = useState("1");
   const dispatch = useDispatch();
   const mainContRef: any = useRef(null);
-  const time = useRef(0);
+  const issuesOffset = useSelector((state: any) => state.issuesOffset);
+  const time = useRef(issuesOffset);
+
+  console.log(issuesOffset);
+  console.log(time.current);
   // console.log(issues);
 
   useEffect(function () {
@@ -19,7 +24,7 @@ const BoardPage: React.FC = function () {
         type: "getIssues",
         payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
       });
-    // window.addEventListener("scroll", scrollHandler);
+    window.addEventListener("scroll", scrollHandler);
     // time.current++;
   }, []);
 
@@ -47,6 +52,7 @@ const BoardPage: React.FC = function () {
             },
           });
           // console.log(time.current);
+          dispatch(issuesOffsetActions.setOffset(time.current + 1));
           time.current++;
         }
       }

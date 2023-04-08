@@ -4,6 +4,7 @@ import styles from "./IssuesMain.module.scss";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import IssuesHeader from "./IssuesHeader";
 import { issuesActions } from "../../store/issues";
+import { issuesOffsetActions } from "../../store/issues-offset";
 
 const IssuesMain: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -12,13 +13,17 @@ const IssuesMain: React.FC = (props) => {
   const activeLabel = useSelector((state: any) => state.labels.activeLabel);
   const [sortType, setSortType] = useState("Date-ASC");
   const [issuesToShow, setIssuesToShow] = useState([]);
-  const time = useRef(0);
+  const alaki = useRef(0);
+  const issuesOffset = useSelector((state: any) => state.issuesOffset);
+  const time = useRef(issuesOffset);
   const sortQuery = useRef("Date-ASC");
   const mainContRef: any = useRef(null);
 
   // console.log(time.current);
 
   function scrollHandler() {
+    // console.log(issuesOffset);
+
     // console.log(time.current);
 
     // console.log(
@@ -43,6 +48,7 @@ const IssuesMain: React.FC = (props) => {
             },
           });
           // console.log(time.current);
+          dispatch(issuesOffsetActions.setOffset(time.current + 1));
           time.current++;
         }
       }
@@ -51,7 +57,7 @@ const IssuesMain: React.FC = (props) => {
 
   useEffect(
     function () {
-      if (time.current > 0) {
+      if (alaki.current > 0) {
         dispatch(issuesActions.setLoading("true"));
         dispatch({
           type: "getIssues",
@@ -62,6 +68,7 @@ const IssuesMain: React.FC = (props) => {
           },
         });
         time.current = 1;
+        dispatch(issuesOffsetActions.setOffset(1));
         sortQuery.current = sortType;
       }
     },
@@ -104,7 +111,7 @@ const IssuesMain: React.FC = (props) => {
       });
     }
     window.addEventListener("scroll", scrollHandler);
-    time.current++;
+    alaki.current++;
   }, []);
 
   return (

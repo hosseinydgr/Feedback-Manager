@@ -1,4 +1,4 @@
-import { ofType } from "redux-observable";
+import { Epic, ofType } from "redux-observable";
 import { catchError, concatMap, Observable, of } from "rxjs";
 import { activeFileActions } from "../store/active-files";
 import { uploadProgressActions } from "../store/upload-progress";
