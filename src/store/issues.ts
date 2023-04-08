@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: any = { issues: [], loading: "true" };
+const initialState: any = { issues: [], loading: "true", error: "" };
 
 const issuesSlice = createSlice({
   name: "issuesSlice",
@@ -33,6 +33,9 @@ const issuesSlice = createSlice({
 
     setLoading(state, action) {
       return { ...state, loading: action.payload };
+    },
+    setError(state, action) {
+      return { ...state, error: action.payload };
     },
   },
 });

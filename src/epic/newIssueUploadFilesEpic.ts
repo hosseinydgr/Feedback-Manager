@@ -1,18 +1,14 @@
 import { Epic, ofType } from "redux-observable";
-import { catchError, concatMap, Observable, of } from "rxjs";
+import { catchError, concatMap, EMPTY, from, map, Observable, tap } from "rxjs";
 import { activeFileActions } from "../store/active-files";
 import { uploadProgressActions } from "../store/upload-progress";
 
-export const newIssueUploadFilesEpic = function (action$: any, state$: any) {
+export const newIssueUploadFilesEpic: Epic = function (action$) {
   return action$.pipe(
     ofType("uploadFiles"),
-    concatMap(function (action: any) {
-      return new Observable(function (subscriber) {
-        for (let i = 0; i < action.files.length; i++) {
-          subscriber.next({ index: i, file: action.files[i] });
-        }
-        subscriber.complete();
-      }).pipe(
+    concatMap((action) =>
+      from(Array.from({ length: action.files.length }, (_, i) => i)).pipe(
+        map((i) => ({ index: i, file: action.files[i] })),
         concatMap(function (obj: any) {
           return new Observable(function (subscriber) {
             const xhr: any = new XMLHttpRequest();
@@ -62,12 +58,10 @@ export const newIssueUploadFilesEpic = function (action$: any, state$: any) {
           });
         }),
         catchError((error) => {
-          return new Observable(() => console.log(error.message, "Me"));
+          console.log(error.message, "Me");
+          return EMPTY;
         })
-      );
-    }),
-    catchError((error) => {
-      return new Observable(() => console.log(error.message, "Me"));
-    })
+      )
+    )
   );
 };
