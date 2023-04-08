@@ -6,7 +6,7 @@ import SIssueHeader from "./SIssueHeader";
 import styles from "./SIssuePage.module.scss";
 import Header from "../Header";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SIssuePage: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -15,7 +15,8 @@ const SIssuePage: React.FC = (props) => {
   let files: any;
   let setFiles: any;
   [files, setFiles] = useState([]);
-  const [modal, setModal] = useState({ src: "", show: false });
+  const [modal, setModal] = useState({ src: "", show: false, type: "" });
+  const videoRef: any = useRef(null);
 
   console.log(issue);
 
@@ -55,13 +56,19 @@ const SIssuePage: React.FC = (props) => {
   }
 
   function openImgModal(e: any) {
-    setModal({ src: e.target.dataset.src, show: true });
+    setModal({ src: e.target.dataset.src, show: true, type: "img" });
+    document.body.style.overflowY = "hidden";
+  }
+
+  function openVideoModal(e: any) {
+    setModal({ src: e.target.dataset.src, show: true, type: "video" });
     document.body.style.overflowY = "hidden";
   }
 
   function closeImgModal() {
     setModal({ ...modal, show: false });
     document.body.style.overflowY = "unset";
+    if (videoRef.current !== null) videoRef.current.pause();
   }
 
   const arr = [];
@@ -112,6 +119,28 @@ const SIssuePage: React.FC = (props) => {
           <p>{`${file.size} KB`}</p>
         </div>
       );
+    } else if (file.mimeType.split("/")[0] === "video") {
+      arr.push(
+        <div key={file.id} className={styles["file-div"]}>
+          <p
+            data-src={file.path}
+            data-name={file.name}
+            className={styles["other-files"]}
+            onClick={downloader}
+          >
+            Video
+          </p>
+          <p>{file.name}</p>
+          <p>{`${file.size} KB`}</p>
+          <button
+            className={styles["view-img-btn"]}
+            onClick={openVideoModal}
+            data-src={file.path}
+          >
+            View
+          </button>
+        </div>
+      );
     }
   }
 
@@ -156,7 +185,19 @@ const SIssuePage: React.FC = (props) => {
           className={styles["multiply-icon"]}
           onClick={closeImgModal}
         />
-        <img src={modal.src} className={styles["img-view"]} />
+        {modal.type === "img" ? (
+          <img src={modal.src} className={styles["img-view"]} />
+        ) : (
+          <video
+            className={styles["img-view"]}
+            controls
+            autoPlay
+            src={modal.src}
+            ref={videoRef}
+          >
+            Your browser does not support the video tag.
+          </video>
+        )}
       </div>
     </>
   );
