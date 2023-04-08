@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const IssuesPage: React.FC = (props) => {
   const dispatch = useDispatch();
-  const issues = useSelector((state: any) => state.issues);
 
   useEffect(function () {
     dispatch({ type: "getLabels" });

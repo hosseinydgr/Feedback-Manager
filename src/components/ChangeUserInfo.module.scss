@@ -5,10 +5,10 @@
   position: fixed;
   z-index: 5;
   width: 300px;
-  height: 375px;
-  max-height: 100vh;
+  max-height: 380px;
+  height: 80vh;
   left: calc((100vw - 300px) / 2);
-  top: calc((100vh - 373px) / 2);
+  top: 10vh;
   overflow-y: scroll;
 }
 

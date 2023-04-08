@@ -12,26 +12,20 @@ const IssuesMain: React.FC = (props) => {
   const activeLabel = useSelector((state: any) => state.labels.activeLabel);
   const [sortType, setSortType] = useState("Date-ASC");
   const [issuesToShow, setIssuesToShow] = useState([]);
-  const time = useRef(1);
+  const time = useRef(0);
   const sortQuery = useRef("Date-ASC");
 
-  // console.log(issues);
-  useEffect(function () {
-    if (issues.length === 0)
-      dispatch({
-        type: "getIssues",
-        payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
-      });
-    window.addEventListener("scroll", scrollHandler);
-  }, []);
+  // console.log(time.current);
 
   function scrollHandler() {
+    console.log(time.current);
+
     if (time.current <= 1) {
       if (
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight - 1
       ) {
-        console.log(sortQuery.current);
+        // console.log(sortQuery.current);
         dispatch(issuesActions.setLoading("loadMore"));
         dispatch({
           type: "updateIssues",
@@ -41,7 +35,7 @@ const IssuesMain: React.FC = (props) => {
             sortType: sortQuery.current.split("-")[1],
           },
         });
-        console.log(time.current);
+        // console.log(time.current);
         time.current++;
       }
     }
@@ -49,17 +43,19 @@ const IssuesMain: React.FC = (props) => {
 
   useEffect(
     function () {
-      dispatch(issuesActions.setLoading("true"));
-      dispatch({
-        type: "getIssues",
-        payload: {
-          offset: 0,
-          sortBy: sortType.split("-")[0],
-          sortType: sortType.split("-")[1],
-        },
-      });
-      time.current = 1;
-      sortQuery.current = sortType;
+      if (time.current > 0) {
+        dispatch(issuesActions.setLoading("true"));
+        dispatch({
+          type: "getIssues",
+          payload: {
+            offset: 0,
+            sortBy: sortType.split("-")[0],
+            sortType: sortType.split("-")[1],
+          },
+        });
+        time.current = 1;
+        sortQuery.current = sortType;
+      }
     },
     [sortType]
   );
@@ -91,6 +87,17 @@ const IssuesMain: React.FC = (props) => {
     },
     [issues, activeLabel]
   );
+
+  useEffect(function () {
+    if (issues.length === 0) {
+      dispatch({
+        type: "getIssues",
+        payload: { offset: 0, sortBy: "Date", sortType: "ASC" },
+      });
+      window.addEventListener("scroll", scrollHandler);
+    }
+    time.current++;
+  }, []);
 
   return (
     <div className={styles["main-cont"]}>
